@@ -11,7 +11,7 @@ export default defineConfig({
       output: {
         // make sure all dependencies are bundled into one file
         inlineDynamicImports: true,
-      }
+      },
     },
     copyPublicDir: false,
     outDir: 'dist',

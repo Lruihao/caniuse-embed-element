@@ -12,9 +12,9 @@ export default defineConfig({
       external: ['lit'],
       output: {
         globals: {
-          lit: 'Lit'
+          lit: 'Lit',
         },
-      }
+      },
     },
     copyPublicDir: false,
     outDir: 'dist',

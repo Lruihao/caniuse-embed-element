@@ -1,1 +1,1 @@
-export * from './caniuse-embed-element';
+export * from './caniuse-embed-element'

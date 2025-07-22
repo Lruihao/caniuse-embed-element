@@ -1,23 +1,26 @@
 {
   "name": "@cell-x/caniuse-embed-element",
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=20.0.0"
   },
-  "packageManager": "pnpm@9.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "build:lib": "tsc && vite build --config vite.lib.config.ts",
     "build:iife": "tsc && vite build --config vite.iife.config.ts",
     "build:all": "npm run build && npm run build:lib && npm run build:iife",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "lit": "^3.3.1"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.17.0",
+    "eslint": "^9.31.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.5",
     "vite-plugin-dts": "^4.5.4"
