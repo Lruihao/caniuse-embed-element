@@ -69,9 +69,9 @@ import '@cell-x/caniuse-embed-element'
 
 function MyComponent() {
   return (
-    <caniuse-embed 
-      feature="css-grid" 
-      theme="auto" 
+    <caniuse-embed
+      feature="css-grid"
+      theme="auto"
     />
   )
 }
@@ -81,9 +81,9 @@ function MyComponent() {
 
 ```vue
 <template>
-  <caniuse-embed 
-    feature="es6-arrow-functions" 
-    :past="2" 
+  <caniuse-embed
+    feature="es6-arrow-functions"
+    :past="2"
     :future="1"
   />
 </template>
@@ -95,25 +95,6 @@ export default {
   name: 'MyComponent'
 }
 </script>
-```
-
-#### Angular
-
-```typescript
-// app.component.ts
-import '@cell-x/caniuse-embed-element'
-
-// Add to schemas in your module
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-
-@NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-```
-
-```html
-<!-- app.component.html -->
-<caniuse-embed feature="webp" theme="light"></caniuse-embed>
 ```
 
 ## ⚙️ API Reference
@@ -160,7 +141,7 @@ This web component works in all modern browsers that support:
 - Shadow DOM v1
 - ES2015+ features
 
-<!-- 
+<!--
 For older browsers, consider using polyfills:
 
 ```html

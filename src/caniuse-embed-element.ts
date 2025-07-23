@@ -3,11 +3,11 @@ import { customElement, property } from 'lit/decorators.js'
 
 /**
  * A custom web component that embeds caniuse.com browser compatibility data for a specific feature.
- * 
+ *
  * This element displays an interactive iframe showing browser support information from caniuse.com.
  * It dynamically adjusts its height based on the content and provides customization options for
  * theme, time range, and data source.
- * 
+ *
  * @example
  * ```html
  * <caniuse-embed feature="css-grid" theme="dark"></caniuse-embed>
@@ -138,7 +138,8 @@ export class CaniuseEmbedElement extends LitElement {
    * @private
    */
   private generateSource(): string {
-    if (!this.feature) return ''
+    if (!this.feature)
+      return ''
     const params = []
     if (this.past)
       params.push(`past=${this.past}`)

@@ -2,11 +2,38 @@
   "name": "@cell-x/caniuse-embed-element",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@10.13.1",
+  "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
+  "author": "Lruihao (https://lruihao.cn)",
+  "license": "MIT",
+  "homepage": "https://github.com/Lruihao/caniuse-embed-element#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lruihao/caniuse-embed-element.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lruihao/caniuse-embed-element/issues"
+  },
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "lit",
+    "caniuse",
+    "browser-compatibility",
+    "iframe",
+    "typescript",
+    "browser-support"
+  ],
+  "main": "dist/caniuse-embed-element.js",
+  "types": "dist/caniuse-embed-element.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
-  "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
