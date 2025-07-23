@@ -6,6 +6,7 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

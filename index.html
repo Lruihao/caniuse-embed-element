@@ -1,16 +1,66 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Lit + TS</title>
-    <link rel="stylesheet" href="./src/index.css" />
+    <title>&lt;caniuse-embed&gt; Element 示例</title>
+    <link rel="stylesheet" href="/src/index.css" />
     <script type="module" src="/src/caniuse-embed-element.ts"></script>
+    <!-- <script async src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"></script> -->
   </head>
   <body>
-    <caniuse-embed>
-      <h1>Vite + Lit</h1>
-    </caniuse-embed>
+    <h1>&lt;caniuse-embed&gt; Element 使用示例</h1>
+
+    <div class="example">
+      <h2>基础用法</h2>
+      <h3>嵌入脚本</h3>
+      <pre class="notranslate"><code class="notranslate">&lt;script src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"&gt;&lt;/script&gt;</code></pre>
+      <h3>插入元素</h3>
+      <p>特性名称获取详见：<a href="https://caniuse.lruihao.cn/">https://caniuse.lruihao.cn/</a></p>
+      <pre class="notranslate"><code class="notranslate">&lt;caniuse-embed<br>  feature="css-grid"<br>  past="2"<br>  future="1"<br>  origin="https://caniuse.lruihao.cn"<br>  theme="auto"<br>&gt;<br>&lt;/caniuse-embed&gt;</code></pre>
+    </div>
+
+    <div class="example">
+      <h2>特性名称（<code>feature</code>）</h2>
+      <caniuse-embed feature="css-grid"></caniuse-embed>
+      <p>不指定 <code>feature</code>时：</p>
+      <caniuse-embed></caniuse-embed>
+    </div>
+
+    <div class="example">
+      <h2>过去版本（<code>past</code>）</h2>
+      <p>显示过去 n 个版本，范围为 0 - 5，默认为 2</p>
+      <caniuse-embed feature="css-grid" past="3"></caniuse-embed>
+    </div>
+
+    <div class="example">
+      <h2>未来版本（<code>future</code>）</h2>
+      <p>显示未来 n 个版本，范围为 0 - 3，默认为 1</p>
+      <caniuse-embed feature="css-grid" future="2"></caniuse-embed>
+    </div>
+
+    <div class="example">
+      <h2>[可选] 自定义数据源（<code>origin</code>）</h2>
+      <p>例如：<code>https://caniuse.pengzhanbo.cn</code></p>
+      <caniuse-embed feature="css-grid" origin="https://caniuse.pengzhanbo.cn"></caniuse-embed>
+
+    <div class="example">
+      <h2>暗黑主题（<code>theme</code>）</h2>
+      <p>可选：<code>auto</code> / <code>light</code> / <code>dark</code> </p>
+      <caniuse-embed feature="css-grid" theme="dark"></caniuse-embed>
+    </div>
+
+    <script>
+      // 动态创建元素
+      setTimeout(() => {
+        const dynamicElement = document.createElement('caniuse-embed')
+        dynamicElement.feature = 'flexbox'
+        const container = document.createElement('div')
+        container.className = 'example'
+        container.innerHTML = '<h2>动态创建的元素</h2>'
+        container.appendChild(dynamicElement)
+        document.body.appendChild(container)
+      }, 1000)
+    </script>
   </body>
 </html>
