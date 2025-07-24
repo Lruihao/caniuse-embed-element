@@ -143,6 +143,8 @@ export class CaniuseEmbedElement extends LitElement {
     const params = []
     if (this.past)
       params.push(`past=${this.past}`)
+    if (this.future)
+      params.push(`future=${this.future}`)
     if (this.theme)
       params.push(`theme=${this.theme}`)
 
