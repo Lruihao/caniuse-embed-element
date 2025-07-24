@@ -1,0 +1,13 @@
+name: Vercel deploy hook
+on:
+  schedule:
+    # Rebuid the site every day at 00:00 UTC to update the projects data
+    - cron: '0 0 * * *'
+jobs:
+  Vercel-Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # See https://github.com/Lruihao/caniuse-embed
+      - name: Trigger Vercel deploy hook to refresh the caniuse-embed data
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}

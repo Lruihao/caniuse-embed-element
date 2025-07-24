@@ -1,4 +1,4 @@
- body {
+body {
   font-family: system-ui, sans-serif;
   max-width: 800px;
   margin: 0 auto;
@@ -30,13 +30,49 @@ code {
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
 }
+
 .example {
   margin: 2rem 0;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
 
+.github-corner svg {
+  fill: #151513;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  border: 0;
+  right: 0;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
+}
 
 @media only screen and (max-width: 680px) {
   body {

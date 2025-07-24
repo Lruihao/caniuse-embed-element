@@ -5,6 +5,8 @@
 
 A lightweight, customizable web component that embeds [caniuse.com](https://caniuse.com) browser compatibility data for specific web features. Built with [Lit](https://lit.dev/) and designed to seamlessly integrate into any web project.
 
+[🌟 **Live Demo**](https://lruihao.github.io/caniuse-embed-element/)
+
 ## ✨ Features
 
 - 🎯 **Easy Integration**: Drop-in web component that works with any framework or vanilla HTML
