@@ -25,7 +25,7 @@
     "browser-support"
   ],
   "main": "dist/caniuse-embed-element.js",
-  "types": "dist/caniuse-embed-element.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "LICENSE",
     "README.md",

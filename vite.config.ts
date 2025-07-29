@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { defineConfig, loadEnv } from 'vite'
 
 // https://vite.dev/config/

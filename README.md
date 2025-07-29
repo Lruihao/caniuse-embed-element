@@ -64,27 +64,12 @@ import '@cell-x/caniuse-embed-element'
 
 ### Framework Integration
 
-#### React/Next.js
-
-```jsx
-import '@cell-x/caniuse-embed-element'
-
-function MyComponent() {
-  return (
-    <caniuse-embed
-      feature="css-grid"
-      theme="auto"
-    />
-  )
-}
-```
-
-#### Vue
+Here's an example using Vue.js. For more framework integration examples, see [FRAMEWORK_INTEGRATION.md](FRAMEWORK_INTEGRATION.md).
 
 ```vue
 <template>
   <caniuse-embed
-    feature="es6-arrow-functions"
+    feature="css-grid"
     :past="2"
     :future="1"
   />
@@ -98,6 +83,12 @@ export default {
 }
 </script>
 ```
+
+> [!TIP]
+>
+> [Skipping Component Resolution](https://vuejs.org/guide/extras/web-components.html#skipping-component-resolution)
+>
+> To let Vue know that certain elements should be treated as custom elements and skip component resolution, we can specify the [`compilerOptions.isCustomElement` option](https://vuejs.org/api/application.html#app-config-compileroptions).
 
 ## ⚙️ API Reference
 
@@ -124,11 +115,11 @@ Feature names correspond to the identifiers used on [caniuse.com](https://canius
 
 - `css-grid` - CSS Grid Layout
 - `flexbox` - Flexible Box Layout
-- `es6-arrow-functions` - Arrow Functions
+- `arrow-functions` - Arrow Functions
 - `webp` - WebP Image Format
 - `css-variables` - CSS Custom Properties
 - `async-functions` - Async/Await Functions
-- `intersection-observer` - Intersection Observer API
+- ...
 
 ### CSS Classes
 
