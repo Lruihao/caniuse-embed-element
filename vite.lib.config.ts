@@ -4,7 +4,7 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: 'src/caniuse-embed-element.ts',
       name: 'CaniuseEmbedElement',
       formats: ['es', 'umd'],
     },
@@ -20,5 +20,7 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: false,
   },
-  plugins: [dts()],
+  plugins: [dts({
+    exclude: ['src/index.ts'],
+  })],
 })

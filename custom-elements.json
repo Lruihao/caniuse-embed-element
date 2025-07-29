@@ -1,0 +1,338 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "dist/caniuse-embed-element.iife.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.iife.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.iife.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/caniuse-embed-element.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        },
+        {
+          "kind": "variable",
+          "name": "h",
+          "default": "class extends C { constructor() { super(...arguments), this.feature = \"\", this.past = 2, this.future = 1, this.origin = \"https://caniuse.lruihao.cn\", this.theme = \"auto\", this.meta = Math.random().toString(36).slice(2), this._iframeHeight = 500, this.handleMessage = (r) => { const t = this.parseData(r.data), { type: e, payload: s = {} } = t; e === \"ciu_embed\" && s.feature === this.feature && s.meta === this.meta && (this._iframeHeight = Math.ceil(s.height), this.requestUpdate()); }; } /** * Called when the element is added to the DOM. * Sets up the message listener for iframe communication. */ connectedCallback() { super.connectedCallback(), this.setupMessageListener(); } /** * Called when the element is removed from the DOM. * Cleans up the message event listener to prevent memory leaks. */ disconnectedCallback() { super.disconnectedCallback(), window.removeEventListener(\"message\", this.handleMessage); } /** * Sets up the global message event listener for iframe communication. * This allows the component to receive height updates from the embedded iframe. * @private */ setupMessageListener() { window.addEventListener(\"message\", this.handleMessage); } /** * Safely parses incoming message data, handling both string and object formats. * @param data - The raw data from a postMessage event * @returns Parsed data object or empty object if parsing fails * @private */ parseData(r) { try { return typeof r == \"string\" ? JSON.parse(r) : r; } catch { return {}; } } /** * Generates the iframe source URL based on current component properties. * Constructs the URL with feature, meta, theme, and past version parameters. * @returns The complete URL for the iframe source, or empty string if no feature is specified * @private */ generateSource() { if (!this.feature) return \"\"; const r = []; this.past && r.push(`past=${this.past}`), this.future && r.push(`future=${this.future}`), this.theme && r.push(`theme=${this.theme}`); const t = r.length ? `&${r.join(\"&\")}` : \"\"; return `${this.origin}/${this.feature}#meta=${this.meta}${t}`; } /** * Renders the component's HTML template. * Shows either an iframe with caniuse data or a placeholder message when no feature is specified. * @returns The HTML template for this component */ render() { const r = this.generateSource(); return r ? _` <iframe class=\"ciu-embed-iframe\" src=\"${r}\" height=\"${this._iframeHeight}\" allow=\"fullscreen\" ></iframe> ` : _` <p class=\"ciu-embed-empty\"> <span>Data on support for the features across the major browsers from <a href=\"https://caniuse.com\" target=\"_blank\">caniuse.com</a>.</span><br> <span>See more at <a href=\"https://caniuse.lruihao.cn\" target=\"_blank\">caniuse.lruihao.cn</a>.</span> </p> `; } }"
+        },
+        {
+          "kind": "variable",
+          "name": "r",
+          "type": {
+            "text": "array"
+          },
+          "default": "[]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CaniuseEmbedElement",
+          "declaration": {
+            "name": "h",
+            "module": "dist/caniuse-embed-element.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/caniuse-embed-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.\n\nThis element displays an interactive iframe showing browser support information from caniuse.com.\nIt dynamically adjusts its height based on the content and provides customization options for\ntheme, time range, and data source.",
+          "name": "CaniuseEmbedElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "feature",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The name of the feature to display browser compatibility data for.\nThis should match a feature identifier from caniuse.com.",
+              "attribute": "feature"
+            },
+            {
+              "kind": "field",
+              "name": "past",
+              "type": {
+                "text": "0 | 1 | 2 | 3 | 4 | 5"
+              },
+              "default": "2",
+              "description": "Number of past major browser versions to display in the compatibility table.\nControls how far back in browser history the data extends.",
+              "attribute": "past"
+            },
+            {
+              "kind": "field",
+              "name": "future",
+              "type": {
+                "text": "0 | 1 | 2 | 3"
+              },
+              "default": "1",
+              "description": "Number of future major browser versions to display in the compatibility table.\nControls how far into future browser versions the data extends.",
+              "attribute": "future"
+            },
+            {
+              "kind": "field",
+              "name": "origin",
+              "type": {
+                "text": "string"
+              },
+              "default": "'https://caniuse.lruihao.cn'",
+              "description": "The base URL of the caniuse embed service.\nCan be customized to use a different caniuse mirror or service.",
+              "attribute": "origin"
+            },
+            {
+              "kind": "field",
+              "name": "theme",
+              "type": {
+                "text": "'auto' | 'light' | 'dark'"
+              },
+              "default": "'auto'",
+              "description": "The color theme for the embedded content.\n- 'auto': Follows system preference\n- 'light': Light theme\n- 'dark': Dark theme",
+              "attribute": "theme"
+            },
+            {
+              "kind": "field",
+              "name": "meta",
+              "description": "A unique identifier for this embed instance.\nUsed to match messages from the iframe to this specific component instance.\nAutomatically generated on creation.",
+              "attribute": "meta"
+            },
+            {
+              "kind": "field",
+              "name": "_iframeHeight",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "500",
+              "description": "The current height of the embedded iframe in pixels.\nAutomatically updated based on content size via postMessage communication."
+            },
+            {
+              "kind": "method",
+              "name": "setupMessageListener",
+              "privacy": "private",
+              "description": "Sets up the global message event listener for iframe communication.\nThis allows the component to receive height updates from the embedded iframe."
+            },
+            {
+              "kind": "field",
+              "name": "handleMessage",
+              "privacy": "private",
+              "description": "Handles incoming postMessage events from the embedded iframe.\nUpdates the iframe height when a valid message is received from the correct iframe instance.",
+              "parameters": [
+                {
+                  "description": "The MessageEvent containing data from the iframe",
+                  "name": "ev"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "parseData",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "unknown"
+                  },
+                  "description": "The raw data from a postMessage event"
+                }
+              ],
+              "description": "Safely parses incoming message data, handling both string and object formats."
+            },
+            {
+              "kind": "method",
+              "name": "generateSource",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Generates the iframe source URL based on current component properties.\nConstructs the URL with feature, meta, theme, and past version parameters."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "feature",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The name of the feature to display browser compatibility data for.\nThis should match a feature identifier from caniuse.com.",
+              "fieldName": "feature"
+            },
+            {
+              "name": "past",
+              "type": {
+                "text": "0 | 1 | 2 | 3 | 4 | 5"
+              },
+              "default": "2",
+              "description": "Number of past major browser versions to display in the compatibility table.\nControls how far back in browser history the data extends.",
+              "fieldName": "past"
+            },
+            {
+              "name": "future",
+              "type": {
+                "text": "0 | 1 | 2 | 3"
+              },
+              "default": "1",
+              "description": "Number of future major browser versions to display in the compatibility table.\nControls how far into future browser versions the data extends.",
+              "fieldName": "future"
+            },
+            {
+              "name": "origin",
+              "type": {
+                "text": "string"
+              },
+              "default": "'https://caniuse.lruihao.cn'",
+              "description": "The base URL of the caniuse embed service.\nCan be customized to use a different caniuse mirror or service.",
+              "fieldName": "origin"
+            },
+            {
+              "name": "theme",
+              "type": {
+                "text": "'auto' | 'light' | 'dark'"
+              },
+              "default": "'auto'",
+              "description": "The color theme for the embedded content.\n- 'auto': Follows system preference\n- 'light': Light theme\n- 'dark': Dark theme",
+              "fieldName": "theme"
+            },
+            {
+              "name": "meta",
+              "description": "A unique identifier for this embed instance.\nUsed to match messages from the iframe to this specific component instance.\nAutomatically generated on creation.",
+              "fieldName": "meta"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "caniuse-embed",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CaniuseEmbedElement",
+          "declaration": {
+            "name": "CaniuseEmbedElement",
+            "module": "src/caniuse-embed-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "caniuse-embed",
+          "declaration": {
+            "name": "CaniuseEmbedElement",
+            "module": "src/caniuse-embed-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./caniuse-embed-element"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist-demo/assets/index-qAIwLChA.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        },
+        {
+          "kind": "variable",
+          "name": "r",
+          "type": {
+            "text": "array"
+          },
+          "default": "[]"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist-demo/assets/index-qAIwLChA.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist-demo/assets/index-qAIwLChA.js"
+          }
+        }
+      ]
+    }
+  ]
+}

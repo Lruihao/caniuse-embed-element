@@ -25,10 +25,11 @@
     "browser-support"
   ],
   "main": "dist/caniuse-embed-element.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/caniuse-embed-element.d.ts",
   "files": [
     "LICENSE",
     "README.md",
+    "custom-elements.json",
     "dist"
   ],
   "engines": {
@@ -39,18 +40,21 @@
     "build": "tsc && vite build",
     "build:lib": "tsc && vite build --config vite.lib.config.ts",
     "build:iife": "tsc && vite build --config vite.iife.config.ts",
-    "build:all": "npm run build && npm run build:lib && npm run build:iife",
+    "build:all": "npm run build && npm run build:lib && npm run build:iife && npm run manifest",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "manifest": "custom-elements-manifest analyze --litelement"
   },
   "dependencies": {
     "lit": "^3.3.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.17.0",
+    "@custom-elements-manifest/analyzer": "^0.10.4",
     "eslint": "^9.31.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.5",
     "vite-plugin-dts": "^4.5.4"
-  }
+  },
+  "customElements": "custom-elements.json"
 }
