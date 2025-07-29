@@ -67,21 +67,20 @@ import '@cell-x/caniuse-embed-element'
 Here's an example using Vue.js. For more framework integration examples, see [FRAMEWORK_INTEGRATION.md](FRAMEWORK_INTEGRATION.md).
 
 ```vue
-<template>
-  <caniuse-embed
-    feature="css-grid"
-    :past="2"
-    :future="1"
-  />
-</template>
-
-<script>
+<script setup>
 import '@cell-x/caniuse-embed-element'
-
-export default {
-  name: 'MyComponent'
-}
 </script>
+
+<template>
+  <div>
+    <caniuse-embed
+      feature="css-grid"
+      theme="dark"
+      :past="3"
+      :future="2"
+    />
+  </div>
+</template>
 ```
 
 > [!TIP]

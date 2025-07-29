@@ -2,6 +2,25 @@ import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 
 /**
+ * Props for configuring the CaniuseEmbed component.
+ *
+ * @property feature - The identifier of the feature to display support data for (e.g., 'flexbox').
+ * @property past - Number of past browser versions to display (0-5). Controls the historical data shown.
+ * @property future - Number of future browser versions to display (0-3). Controls the preview of upcoming support.
+ * @property origin - The origin URL to use for embedding, useful for specifying a custom or proxied caniuse.com endpoint.
+ * @property theme - The color theme of the embed. Can be 'auto' (match system), 'light', or 'dark'.
+ * @property meta - Additional metadata or configuration string for advanced customization.
+ */
+export interface CaniuseEmbedElementProps {
+  feature?: string
+  past?: 0 | 1 | 2 | 3 | 4 | 5
+  future?: 0 | 1 | 2 | 3
+  origin?: string
+  theme?: 'auto' | 'light' | 'dark'
+  meta?: string
+}
+
+/**
  * A custom web component that embeds caniuse.com browser compatibility data for a specific feature.
  *
  * This element displays an interactive iframe showing browser support information from caniuse.com.
@@ -211,5 +230,8 @@ export class CaniuseEmbedElement extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     'caniuse-embed': CaniuseEmbedElement
+  }
+  interface HTMLElementPropsMap {
+    'caniuse-embed': CaniuseEmbedElementProps
   }
 }

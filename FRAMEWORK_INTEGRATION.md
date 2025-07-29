@@ -1,6 +1,24 @@
 # Framework Integration
 
+```bash
+npm install @cell-x/caniuse-embed-element
+```
+
 This package provides TypeScript declarations for popular frameworks to ensure proper type safety and IntelliSense support.
+
+## React
+
+Declare the custom element in your React project by adding the following to your `index.d.ts` or a similar type declaration file:
+
+```ts
+declare namespace React {
+  declare namespace JSX {
+    interface IntrinsicElements {
+      'caniuse-embed': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & HTMLElementPropsMap['caniuse-embed'];
+    }
+  }
+}
+```
 
 ```jsx
 import '@cell-x/caniuse-embed-element'
@@ -21,7 +39,17 @@ function App() {
 
 ## Vue 3
 
+> [!TIP]
+>
+> [Skipping Component Resolution](https://vuejs.org/guide/extras/web-components.html#skipping-component-resolution)
+>
+> To let Vue know that certain elements should be treated as custom elements and skip component resolution, we can specify the [`compilerOptions.isCustomElement` option](https://vuejs.org/api/application.html#app-config-compileroptions).
+
 ```vue
+<script setup>
+import '@cell-x/caniuse-embed-element'
+</script>
+
 <template>
   <div>
     <caniuse-embed
@@ -32,10 +60,6 @@ function App() {
     />
   </div>
 </template>
-
-<script setup>
-import '@cell-x/caniuse-embed-element'
-</script>
 ```
 
 ## Angular
