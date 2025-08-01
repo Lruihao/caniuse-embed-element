@@ -96,10 +96,11 @@ import '@cell-x/caniuse-embed-element'
 | Attribute | Type                          | Default                        | Description                                                                |
 | --------- | ----------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
 | `feature` | `string`                      | `''`                           | **Required**. The caniuse feature identifier (e.g., 'css-grid', 'flexbox') |
-| `theme`   | `'auto' \| 'light' \| 'dark'` | `'auto'`                       | Color theme for the embedded content                                       |
 | `past`    | `0 - 5`                       | `2`                            | Number of past browser versions to display                                 |
 | `future`  | `0 - 3`                       | `1`                            | Number of future browser versions to display                               |
 | `origin`  | `string`                      | `'https://caniuse.lruihao.cn'` | Base URL of the caniuse embed service                                      |
+| `theme`   | `'auto' \| 'light' \| 'dark'` | `'auto'`                       | Color theme for the embedded content                                       |
+| `loading` | `'eager' \| 'lazy'`           | `'lazy'`                       | Loading strategy for the iframe (eager or lazy)                            |
 | `meta`    | `string`                      | `auto-generated`               | Unique identifier for the embed instance                                   |
 
 ### Finding Feature Names

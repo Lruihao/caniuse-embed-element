@@ -17,6 +17,7 @@ export interface CaniuseEmbedElementProps {
   future?: 0 | 1 | 2 | 3
   origin?: string
   theme?: 'auto' | 'light' | 'dark'
+  loading?: 'eager' | 'lazy'
   meta?: string
 }
 
@@ -75,6 +76,15 @@ export class CaniuseEmbedElement extends LitElement {
    */
   @property({ type: String })
   theme: 'auto' | 'light' | 'dark' = 'auto'
+
+  /**
+   * The loading strategy for the embedded iframe.
+   * - 'eager': Loads immediately
+   * - 'lazy': Loads when in viewport
+   * @default "lazy"
+   */
+  @property()
+  loading: 'eager' | 'lazy' = 'lazy'
 
   /**
    * A unique identifier for this embed instance.
@@ -193,6 +203,7 @@ export class CaniuseEmbedElement extends LitElement {
         src="${source}"
         height="${this._iframeHeight}"
         allow="fullscreen"
+        loading="${this.loading}"
       ></iframe>
     `
   }
