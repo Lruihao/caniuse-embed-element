@@ -41,11 +41,11 @@
         {
           "kind": "variable",
           "name": "h",
-          "default": "class extends C { constructor() { super(...arguments), this.feature = \"\", this.past = 2, this.future = 1, this.origin = \"https://caniuse.lruihao.cn\", this.theme = \"auto\", this.meta = Math.random().toString(36).slice(2), this._iframeHeight = 500, this.handleMessage = (r) => { const t = this.parseData(r.data), { type: e, payload: s = {} } = t; e === \"ciu_embed\" && s.feature === this.feature && s.meta === this.meta && (this._iframeHeight = Math.ceil(s.height), this.requestUpdate()); }; } /** * Called when the element is added to the DOM. * Sets up the message listener for iframe communication. */ connectedCallback() { super.connectedCallback(), this.setupMessageListener(); } /** * Called when the element is removed from the DOM. * Cleans up the message event listener to prevent memory leaks. */ disconnectedCallback() { super.disconnectedCallback(), window.removeEventListener(\"message\", this.handleMessage); } /** * Sets up the global message event listener for iframe communication. * This allows the component to receive height updates from the embedded iframe. * @private */ setupMessageListener() { window.addEventListener(\"message\", this.handleMessage); } /** * Safely parses incoming message data, handling both string and object formats. * @param data - The raw data from a postMessage event * @returns Parsed data object or empty object if parsing fails * @private */ parseData(r) { try { return typeof r == \"string\" ? JSON.parse(r) : r; } catch { return {}; } } /** * Generates the iframe source URL based on current component properties. * Constructs the URL with feature, meta, theme, and past version parameters. * @returns The complete URL for the iframe source, or empty string if no feature is specified * @private */ generateSource() { if (!this.feature) return \"\"; const r = []; this.past && r.push(`past=${this.past}`), this.future && r.push(`future=${this.future}`), this.theme && r.push(`theme=${this.theme}`); const t = r.length ? `&${r.join(\"&\")}` : \"\"; return `${this.origin}/${this.feature}#meta=${this.meta}${t}`; } /** * Renders the component's HTML template. * Shows either an iframe with caniuse data or a placeholder message when no feature is specified. * @returns The HTML template for this component */ render() { const r = this.generateSource(); return r ? _` <iframe class=\"ciu-embed-iframe\" src=\"${r}\" height=\"${this._iframeHeight}\" allow=\"fullscreen\" ></iframe> ` : _` <p class=\"ciu-embed-empty\"> <span>Data on support for the features across the major browsers from <a href=\"https://caniuse.com\" target=\"_blank\">caniuse.com</a>.</span><br> <span>See more at <a href=\"https://caniuse.lruihao.cn\" target=\"_blank\">caniuse.lruihao.cn</a>.</span> </p> `; } }"
+          "default": "class extends C { constructor() { super(...arguments), this.feature = \"\", this.past = 2, this.future = 1, this.origin = \"https://caniuse.lruihao.cn\", this.theme = \"auto\", this.loading = \"lazy\", this.meta = Math.random().toString(36).slice(2), this._iframeHeight = 500, this.handleMessage = (i) => { const t = this.parseData(i.data), { type: e, payload: s = {} } = t; e === \"ciu_embed\" && s.feature === this.feature && s.meta === this.meta && (this._iframeHeight = Math.ceil(s.height), this.requestUpdate()); }; } /** * Called when the element is added to the DOM. * Sets up the message listener for iframe communication. */ connectedCallback() { super.connectedCallback(), this.setupMessageListener(); } /** * Called when the element is removed from the DOM. * Cleans up the message event listener to prevent memory leaks. */ disconnectedCallback() { super.disconnectedCallback(), window.removeEventListener(\"message\", this.handleMessage); } /** * Sets up the global message event listener for iframe communication. * This allows the component to receive height updates from the embedded iframe. * @private */ setupMessageListener() { window.addEventListener(\"message\", this.handleMessage); } /** * Safely parses incoming message data, handling both string and object formats. * @param data - The raw data from a postMessage event * @returns Parsed data object or empty object if parsing fails * @private */ parseData(i) { try { return typeof i == \"string\" ? JSON.parse(i) : i; } catch { return {}; } } /** * Generates the iframe source URL based on current component properties. * Constructs the URL with feature, meta, theme, and past version parameters. * @returns The complete URL for the iframe source, or empty string if no feature is specified * @private */ generateSource() { if (!this.feature) return \"\"; const i = []; this.past && i.push(`past=${this.past}`), this.future && i.push(`future=${this.future}`), this.theme && i.push(`theme=${this.theme}`); const t = i.length ? `&${i.join(\"&\")}` : \"\"; return `${this.origin}/${this.feature}#meta=${this.meta}${t}`; } /** * Renders the component's HTML template. * Shows either an iframe with caniuse data or a placeholder message when no feature is specified. * @returns The HTML template for this component */ render() { const i = this.generateSource(); return i ? _`<iframe class=\"ciu-embed-iframe\" src=\"${i}\" height=\"${this._iframeHeight}\" allow=\"fullscreen\" loading=\"${this.loading}\"></iframe>` : _`<p class=\"ciu-embed-empty\"><span>Data on support for the features across the major browsers from <a href=\"https://caniuse.com\" target=\"_blank\">caniuse.com</a>.</span><br><span>See more at <a href=\"https://caniuse.lruihao.cn\" target=\"_blank\">caniuse.lruihao.cn</a>.</span></p>`; } }"
         },
         {
           "kind": "variable",
-          "name": "r",
+          "name": "i",
           "type": {
             "text": "array"
           },
@@ -55,7 +55,7 @@
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "r",
+          "name": "i",
           "declaration": {
             "name": "t",
             "module": "dist/caniuse-embed-element.js"
@@ -63,7 +63,7 @@
         },
         {
           "kind": "custom-element-definition",
-          "name": "r",
+          "name": "i",
           "declaration": {
             "name": "t",
             "module": "dist/caniuse-embed-element.js"
@@ -137,6 +137,16 @@
               "default": "'auto'",
               "description": "The color theme for the embedded content.\n- 'auto': Follows system preference\n- 'light': Light theme\n- 'dark': Dark theme",
               "attribute": "theme"
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "'eager' | 'lazy'"
+              },
+              "default": "'lazy'",
+              "description": "The loading strategy for the embedded iframe.\n- 'eager': Loads immediately\n- 'lazy': Loads when in viewport",
+              "attribute": "loading"
             },
             {
               "kind": "field",
@@ -251,6 +261,15 @@
               "fieldName": "theme"
             },
             {
+              "name": "loading",
+              "type": {
+                "text": "'eager' | 'lazy'"
+              },
+              "default": "'lazy'",
+              "description": "The loading strategy for the embedded iframe.\n- 'eager': Loads immediately\n- 'lazy': Loads when in viewport",
+              "fieldName": "loading"
+            },
+            {
               "name": "meta",
               "description": "A unique identifier for this embed instance.\nUsed to match messages from the iframe to this specific component instance.\nAutomatically generated on creation.",
               "fieldName": "meta"
@@ -294,42 +313,6 @@
           "declaration": {
             "name": "*",
             "package": "./caniuse-embed-element"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist-demo/assets/index-qAIwLChA.js",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "t"
-        },
-        {
-          "kind": "variable",
-          "name": "r",
-          "type": {
-            "text": "array"
-          },
-          "default": "[]"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "r",
-          "declaration": {
-            "name": "t",
-            "module": "dist-demo/assets/index-qAIwLChA.js"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "r",
-          "declaration": {
-            "name": "t",
-            "module": "dist-demo/assets/index-qAIwLChA.js"
           }
         }
       ]
