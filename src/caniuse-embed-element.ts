@@ -189,56 +189,23 @@ export class CaniuseEmbedElement extends LitElement {
   render() {
     const source = this.generateSource()
     if (!source) {
-      return html`
-        <p class="ciu-embed-empty">
-          <span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br>
-          <span>See more at <a href="https://caniuse.lruihao.cn" target="_blank">caniuse.lruihao.cn</a>.</span>
-        </p>
-      `
+      return html`<p class="ciu-embed-empty"><span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br><span>See more at <a href="https://caniuse.lruihao.cn" target="_blank">caniuse.lruihao.cn</a>.</span></p>`
     }
 
-    return html`
-      <iframe
-        class="ciu-embed-iframe"
-        src="${source}"
-        height="${this._iframeHeight}"
-        allow="fullscreen"
-        loading="${this.loading}"
-      ></iframe>
-    `
+    return html`<iframe class="ciu-embed-iframe" src="${source}" height="${this._iframeHeight}" allow="fullscreen" loading="${this.loading}"></iframe>`
   }
 
   /**
    * CSS styles for the component.
    * Defines styling for the host element, iframe, and empty state message.
    */
-  static styles = css`
-    :host {
-      display: block;
-      width: 100%;
-    }
-    .ciu-embed-iframe {
-      display: block;
-      width: 100%;
-      border: none;
-      border-radius: 0;
-    }
-    .ciu-embed-empty {
-      color: var(--text-secondary, #919191);
-      text-align: center;
-      font-size: 12px;
-    }
-    .ciu-embed-empty a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .ciu-embed-empty a:hover {
-      text-decoration: underline;
-    }
-  `
+  static styles = css`:host { display: block; width: 100%; }.ciu-embed-iframe { display: block; width: 100%; border: none; border-radius: 0; }.ciu-embed-empty { color: var(--text-secondary, #919191); text-align: center; font-size: 12px; }.ciu-embed-empty a { color: inherit; text-decoration: none; }.ciu-embed-empty a:hover { text-decoration: underline; }`
 }
 
 declare global {
+  interface Window {
+    CaniuseEmbedElement: typeof CaniuseEmbedElement
+  }
   interface HTMLElementTagNameMap {
     'caniuse-embed': CaniuseEmbedElement
   }
