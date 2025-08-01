@@ -9,7 +9,7 @@ export class CaniuseEmbedApp extends LitElement {
   theme: CaniuseEmbedElementProps['theme'] = 'auto'
 
   @property({ type: String })
-  feature = 'flexbox'
+  feature = ''
 
   private _toggleTheme() {
     const themes: CaniuseEmbedElementProps['theme'][] = ['auto', 'light', 'dark']
@@ -27,8 +27,21 @@ export class CaniuseEmbedApp extends LitElement {
 
   render() {
     return html`
-      <h1>🧩 &lt;caniuse-embed&gt; Element</h1>
-      <p class="subtitle">一个自定义的 Web 组件，用于嵌入 caniuse.com 的特定功能的浏览器兼容性数据。</p>
+      <h1 class="text-center">🧩 &lt;caniuse-embed&gt; Element</h1>
+      <p class="text-center">一个自定义的 Web 组件，用于嵌入 caniuse.com 的特定功能的浏览器兼容性数据。</p>
+
+      <div class="demo-section">
+        <h2>🎯 主要特性</h2>
+        <p>使用 <a href="https://lit.dev" target="_blank">Lit</a> 构建，由 <a href="https://github.com/Lruihao/caniuse-embed-element" target="_blank">@Lruihao</a> 开发。</p>
+        <ul>
+          <li>✅ 完整的 TypeScript 类型支持</li>
+          <li>✅ 支持所有主流前端框架</li>
+          <li>✅ 自动高度调整</li>
+          <li>✅ 多主题支持</li>
+          <li>✅ 响应式设计</li>
+          <li>✅ 现代 Web Components 标准</li>
+        </ul>
+      </div>
 
       <div class="demo-section">
         <h2>📦 安装</h2>
@@ -40,11 +53,46 @@ export class CaniuseEmbedApp extends LitElement {
         <div class="code-block">
           <pre><code>&lt;script src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"&gt;&lt;/script&gt;</code></pre>
         </div>
-        <p>在 HTML 中使用：</p>
-        <div class="code-block">
-          <pre><code>&lt;caniuse-embed feature="css-grid"&gt;&lt;/caniuse-embed&gt;</code></pre>
-        </div>
       </div>
+
+      <div class="demo-section live-demo-section">
+        <h2>🌐 实时演示</h2>
+        <p>以下是一些实际运行的组件示例：</p>
+        <p>指定特性（<code class="inline-code">feature</code>）</p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid"></caniuse-embed>
+        </div>
+        <p>不指定 <code class="inline-code">feature</code>时：</p>
+        <div class="live-demo">
+          <caniuse-embed></caniuse-embed>
+        </div>
+        <p>显示过去 3 个版本（<code class="inline-code">past</code>）：</p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid" past="3"></caniuse-embed>
+        </div>
+        <p>显示未来 2 个版本（<code class="inline-code">future</code>）：</p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid" future="2"></caniuse-embed>
+        </div>
+        <p>自定义数据源（<code class="inline-code">origin</code>）：<code class="inline-code">https://caniuse.pengzhanbo.cn</code></p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid" origin="https://caniuse.pengzhanbo.cn"></caniuse-embed>
+        </div>
+        <p>主题切换（当前为：<code class="inline-code">${this.theme}</code>）：<button @click=${this._toggleTheme} part="button">切换</button></p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid" theme="${this.theme}"></caniuse-embed>
+        </div>
+        <p>动态创建元素：</p>
+        <p>
+          输入 <code class="inline-code">feature</code> 查看效果：
+          <input type="text" @input=${(e: Event) => {
+            const target = e.target as HTMLInputElement
+            this.feature = target.value
+          }} value=${this.feature} placeholder="输入特性名称" />
+          <button @click=${this._createElementDynamically} part="button">创建</button>
+        </p>
+      </div>
+
       <div class="demo-section">
         <h2>🛠️ 支持的属性</h2>
         <table>
@@ -86,100 +134,48 @@ export class CaniuseEmbedApp extends LitElement {
           </tbody>
         </table>
       </div>
-      <div class="demo-section">
-        <h2>🎯 主要特性</h2>
-        <ul>
-          <li>✅ 完整的 TypeScript 类型支持</li>
-          <li>✅ 支持所有主流前端框架</li>
-          <li>✅ 自动高度调整</li>
-          <li>✅ 多主题支持</li>
-          <li>✅ 响应式设计</li>
-          <li>✅ 现代 Web Components 标准</li>
-        </ul>
-      </div>
 
       <div class="demo-section">
-        <h2>🟢 Vue 3 集成</h2>
+        <h2>👾 框架集成</h2>
+        <p>🟢 Vue 3 集成</p>
         <div class="code-block">
           <pre><code>&lt;script setup&gt;
-    import '@cell-x/caniuse-embed-element'
-    &lt;/script&gt;
+import '@cell-x/caniuse-embed-element'
+&lt;/script&gt;
 
-    &lt;template&gt;
-      &lt;div&gt;
-        &lt;caniuse-embed 
-          feature="css-grid" 
-          theme="dark" 
-          :past="3"
-          :future="2"
-        /&gt;
-      &lt;/div&gt;
-    &lt;/template&gt;
-    </code></pre>
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;caniuse-embed 
+      feature="css-grid" 
+      theme="dark" 
+      :past="3"
+      :future="2"
+    /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
         </div>
-        <p>💡 更多信息请查看文档 <a href="https://github.com/Lruihao/caniuse-embed-element/blob/main/FRAMEWORK_INTEGRATION.md#vue-3">FRAMEWORK_INTEGRATION.md</a></p>
-      </div>
-
-      <div class="demo-section">
-        <h2>⚛️ React 集成</h2>
+        <p>⚛️ React 集成</p>
         <div class="code-block">
           <pre><code>import '@cell-x/caniuse-embed-element'
 
-    function App() {
-      return (
-        &lt;div&gt;
-          &lt;caniuse-embed 
-            feature="css-grid" 
-            theme="dark" 
-            past={3}
-            future={2}
-          /&gt;
-        &lt;/div&gt;
-      )
-    }</code></pre>
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;caniuse-embed 
+        feature="css-grid" 
+        theme="dark" 
+        past={3}
+        future={2}
+      /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
         </div>
-        <p>💡 更多信息请查看文档 <a href="https://github.com/Lruihao/caniuse-embed-element/blob/main/FRAMEWORK_INTEGRATION.md#react">FRAMEWORK_INTEGRATION.md</a></p>
+        <p>💡 更多信息请查看文档 <a href="https://github.com/Lruihao/caniuse-embed-element/blob/main/FRAMEWORK_INTEGRATION.md#vue-3" target="_blank">FRAMEWORK_INTEGRATION.md</a></p>
       </div>
 
-      <div class="demo-section live-demo-section">
-        <h2>🌐 实时演示</h2>
-        <p>以下是一些实际运行的组件示例：</p>
-        <p>指定特性（<code class="inline-code">feature</code>）</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid"></caniuse-embed>
-        </div>
-        <p>不指定 <code class="inline-code">feature</code>时：</p>
-        <div class="live-demo">
-          <caniuse-embed></caniuse-embed>
-        </div>
-        <p>显示过去 3 个版本（<code class="inline-code">past</code>）：</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" past="3"></caniuse-embed>
-        </div>
-        <p>显示未来 2 个版本（<code class="inline-code">future</code>）：</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" future="2"></caniuse-embed>
-        </div>
-        <p>自定义数据源（<code class="inline-code">origin</code>）：<code class="inline-code">https://caniuse.pengzhanbo.cn</code></p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" origin="https://caniuse.pengzhanbo.cn"></caniuse-embed>
-        </div>
-        <p>主题切换（当前为：<code class="inline-code">${this.theme}</code>）：<button @click=${this._toggleTheme} part="button">切换</button></p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" theme="${this.theme}"></caniuse-embed>
-        </div>
-        <p>动态创建元素：</p>
-        <p>
-          输入 <code class="inline-code">feature</code> 查看效果：
-          <input type="text" @input=${(e: Event) => {
-            const target = e.target as HTMLInputElement
-            this.feature = target.value
-          }} value=${this.feature} placeholder="输入特性名称" />
-          <button @click=${this._createElementDynamically} part="button">创建</button>
-        </p>
-      </div>
-
-      <a href="https://github.com/Lruihao/caniuse-embed-element" class="github-corner" aria-label="View source on GitHub">
+      <a href="https://github.com/Lruihao/caniuse-embed-element" class="github-corner" aria-label="View source on GitHub" target="_blank">
         <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
           <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" />
           <path
@@ -196,11 +192,11 @@ export class CaniuseEmbedApp extends LitElement {
   static styles = css`
     a {
       font-weight: 500;
-      color: #646cff;
+      color: #007acc;
       text-decoration: inherit;
     }
     a:hover {
-      color: #535bf2;
+      text-decoration: underline;
     }
     input {
       border: 1px solid #ddd;
@@ -217,7 +213,6 @@ export class CaniuseEmbedApp extends LitElement {
       font-size: 1em;
       font-weight: 500;
       font-family: inherit;
-      background-color: #1a1a1a;
       cursor: pointer;
       border-color: #ddd;
       transition: border-color 0.25s;
@@ -225,14 +220,14 @@ export class CaniuseEmbedApp extends LitElement {
     input:hover,
     button:hover,
     button:focus {
-      border-color: #646cff;
+      border-color: #007acc;
     }
     button:focus,
     button:focus-visible {
       outline: 4px auto -webkit-focus-ring-color;
     }
     .inline-code {
-      background-color: #f5f5f5;
+      background-color: var(--code-background-color);
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
     }
@@ -247,21 +242,20 @@ export class CaniuseEmbedApp extends LitElement {
       text-align: left;
     }
     th {
-      background-color: #f2f2f2;
+      background-color: var(--th-background-color);
       font-weight: bold;
     }
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: var(--tr-even-background-color);
     }
     .demo-section {
-      background: white;
       padding: 20px;
       margin: 20px 0;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px var(--demo-shadow);
     }
     .code-block {
-      background: #f8f8f8;
+      background: var(--code-background-color);
       padding: 15px;
       border-radius: 4px;
       overflow-x: auto;
@@ -273,8 +267,7 @@ export class CaniuseEmbedApp extends LitElement {
       overflow-x: auto;
       line-height: 1.45;
     }
-    h1 {
-      color: #333;
+    .text-center {
       text-align: center;
     }
     h2 {
@@ -282,23 +275,11 @@ export class CaniuseEmbedApp extends LitElement {
       border-bottom: 2px solid #007acc;
       padding-bottom: 5px;
     }
-    .subtitle {
-      color: #666;
-      text-align: center;
-    }
     .live-demo {
       border: 1px solid #ddd;
       border-radius: 4px;
       padding: 15px;
       margin: 15px 0;
-    }
-    @media (prefers-color-scheme: light) {
-      a:hover {
-        color: #747bff;
-      }
-      button {
-        background-color: #f9f9f9;
-      }
     }
     .github-corner:hover .octo-arm {
       animation: octocat-wave 560ms ease-in-out;
@@ -324,6 +305,18 @@ export class CaniuseEmbedApp extends LitElement {
       40%,
       80% {
         transform: rotate(10deg);
+      }
+    }
+    @media only screen and (max-width: 680px) {
+      .live-demo {
+        padding: 0;
+      }
+      .live-demo:has(caniuse-embed[feature]) {
+        border: none;
+      }
+      .demo-section {
+        padding: 15px;
+        margin: 15px 0;
       }
     }
 

@@ -1,7 +1,7 @@
 # `<caniuse-embed>` Element
 
 [![npm version](https://img.shields.io/npm/v/@cell-x/caniuse-embed-element.svg)](https://www.npmjs.com/package/@cell-x/caniuse-embed-element)
-[![License](https://img.shields.io/npm/l/@cell-x/caniuse-embed-element.svg)](https://github.com/Lruihao/caniuse-embed-element/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/%40cell-x%2Fcaniuse-embed-element.svg)](https://github.com/Lruihao/caniuse-embed-element/blob/main/LICENSE)
 
 A lightweight, customizable web component that embeds [caniuse.com](https://caniuse.com) browser compatibility data for specific web features. Built with [Lit](https://lit.dev/) and designed to seamlessly integrate into any web project.
 
