@@ -6,37 +6,6 @@ npm install @cell-x/caniuse-embed-element
 
 This package provides TypeScript declarations for popular frameworks to ensure proper type safety and IntelliSense support.
 
-## React
-
-Declare the custom element in your React project by adding the following to your `index.d.ts` or a similar type declaration file:
-
-```ts
-declare namespace React {
-  declare namespace JSX {
-    interface IntrinsicElements {
-      'caniuse-embed': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & HTMLElementPropsMap['caniuse-embed'];
-    }
-  }
-}
-```
-
-```jsx
-import '@cell-x/caniuse-embed-element'
-
-function App() {
-  return (
-    <div>
-      <caniuse-embed
-        feature="css-grid"
-        theme="dark"
-        past={3}
-        future={2}
-      />
-    </div>
-  )
-}
-```
-
 ## Vue 3
 
 > [!TIP]
@@ -60,6 +29,37 @@ import '@cell-x/caniuse-embed-element'
     />
   </div>
 </template>
+```
+
+## React
+
+Declare the custom element in your React project by adding the following to your `index.d.ts` or a similar type declaration file:
+
+```ts
+declare namespace React {
+  declare namespace JSX {
+    interface IntrinsicElements {
+      'caniuse-embed': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & HTMLElementPropsMap['caniuse-embed']
+    }
+  }
+}
+```
+
+```jsx
+import '@cell-x/caniuse-embed-element'
+
+function App() {
+  return (
+    <div>
+      <caniuse-embed
+        feature="css-grid"
+        theme="dark"
+        past={3}
+        future={2}
+      />
+    </div>
+  )
+}
 ```
 
 ## Angular
