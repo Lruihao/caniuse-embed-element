@@ -61,7 +61,7 @@ export class CaniuseEmbedApp extends LitElement {
   }
 
   private async _getFeatureList() {
-    this._featureList = await fetch('https://caniuse.lruihao.cn/features.json').then(res => res.json())
+    this._featureList = await fetch(`${DEFAULT_ORIGIN}/features.json`).then(res => res.json())
     this._filteredFeatureList = [...this._featureList]
     this.requestUpdate()
   }
@@ -323,7 +323,7 @@ function App() {
             </tr>
             <tr>
               <td><strong>origin</strong></td>
-              <td>自定义数据源，默认：<code class="inline-code">https://caniuse.lruihao.cn</code></td>
+              <td>自定义数据源，默认：<code class="inline-code">${DEFAULT_ORIGIN}</code></td>
             </tr>
             <tr>
               <td><strong>theme</strong></td>
