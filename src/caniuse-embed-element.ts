@@ -169,16 +169,13 @@ export class CaniuseEmbedElement extends LitElement {
   private generateSource(): string {
     if (!this.feature)
       return ''
-    const params = []
-    if (this.past)
-      params.push(`past=${this.past}`)
-    if (this.future)
-      params.push(`future=${this.future}`)
-    if (this.theme)
-      params.push(`theme=${this.theme}`)
-
-    const queryString = params.length ? `&${params.join('&')}` : ''
-    return `${this.origin}/${this.feature}#meta=${this.meta}${queryString}`
+    const params = [
+      `meta=${this.meta}`,
+      `past=${this.past}`,
+      `future=${this.future}`,
+      `theme=${this.theme}`,
+    ]
+    return `${this.origin}/${this.feature}#${params.join('&')}`
   }
 
   /**
