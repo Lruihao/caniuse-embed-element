@@ -5,6 +5,7 @@ import './caniuse-embed-element'
 import './components/demo-section'
 import './components/github-corner'
 import type { CaniuseEmbedElementProps } from './caniuse-embed-element'
+import './styles/index.css'
 
 interface SelectItem {
   label: string
@@ -38,8 +39,6 @@ export class CaniuseEmbedApp extends LitElement {
   @property({ type: Number })
   highlightedIndex = -1
 
-  private liveDemoSection?: HTMLElement | null
-
   private _featureList: SelectItem[] = []
 
   private _filteredFeatureList: SelectItem[] = []
@@ -54,10 +53,6 @@ export class CaniuseEmbedApp extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback()
     document.removeEventListener('click', this._handleClickOutside.bind(this))
-  }
-
-  firstUpdated() {
-    this.liveDemoSection = this.shadowRoot?.querySelector('.live-demo-section')
   }
 
   private async _getFeatureList() {
@@ -121,8 +116,8 @@ export class CaniuseEmbedApp extends LitElement {
       this._filteredFeatureList = [...this._featureList]
     } else {
       const searchLower = this.searchTerm.toLowerCase()
-      this._filteredFeatureList = this._featureList.filter(item => 
-        item.label.toLowerCase().includes(searchLower) || 
+      this._filteredFeatureList = this._featureList.filter(item =>
+        item.label.toLowerCase().includes(searchLower) ||
         item.value.toLowerCase().includes(searchLower)
       )
     }
@@ -175,7 +170,7 @@ export class CaniuseEmbedApp extends LitElement {
     const liveDemo = document.createElement('div')
     liveDemo.className = 'live-demo'
     liveDemo.appendChild(dynamicElement)
-    this.liveDemoSection?.appendChild(liveDemo)
+    this.shadowRoot?.querySelector('.dynamic-demo-section')?.appendChild(liveDemo)
   }
 
   private _onPastVersionChange(event: Event) {
@@ -197,25 +192,25 @@ export class CaniuseEmbedApp extends LitElement {
     if (!this.feature) {
       return '<caniuse-embed></caniuse-embed>'
     }
-    
+
     let code = `<caniuse-embed feature="${this.feature}"`
-    
+
     if (this.past !== undefined && this.past !== 2) {
       code += ` past="${this.past}"`
     }
-    
+
     if (this.future !== undefined && this.future !== 1) {
       code += ` future="${this.future}"`
     }
-    
+
     if (this.theme !== 'auto') {
       code += ` theme="${this.theme}"`
     }
-    
+
     code += '></caniuse-embed>'
     return code
   }
-  
+
   introTemplate() {
     return html`
       <demo-section>
@@ -256,7 +251,7 @@ export class CaniuseEmbedApp extends LitElement {
   frameworkIntegrationTemplate() {
     return html`
       <demo-section>
-        <h2>👾 框架集成</h2>
+        <h2>🪢 框架集成</h2>
         <p>🟢 Vue 3 集成</p>
         <div class="code-block">
           <pre><code>&lt;script setup&gt;
@@ -344,10 +339,10 @@ function App() {
   }
 
   featureSelectTemplate() {
-    const displayValue = this.feature 
+    const displayValue = this.feature
       ? (this._featureList.find(item => item.value === this.feature)?.label || this.feature)
       : '请选择一个特性...'
-    
+
     return html`
       <h3>选择特性</h3>
       <p>你想展示什么特性？</p>
@@ -379,24 +374,20 @@ function App() {
               />
             </div>
             <div class="options-container">
-              ${this._filteredFeatureList.length === 0 ? html`
-                <div class="no-results">未找到匹配的特性</div>
-              ` : html`
-                ${repeat(this._filteredFeatureList, 
-                  (item) => item.value, 
-                  (item, index) => html`
-                    <div 
-                      class="option ${this.feature === item.value ? 'selected' : ''} ${index === this.highlightedIndex ? 'highlighted' : ''}"
-                      @click=${() => this._selectFeature(item.value)}
-                      @mouseenter=${() => { this.highlightedIndex = index; this.requestUpdate() }}
-                      role="option"
-                      aria-selected=${this.feature === item.value}
-                    >
-                      <span class="option-label">${item.label}</span>
-                      <span class="option-value">${item.value}</span>
-                    </div>
-                  `
-                )}
+              ${this._filteredFeatureList.length === 0
+                ? html`<div class="no-results">未找到匹配的特性</div>`
+                : html`${repeat(this._filteredFeatureList, (item) => item.value, (item, index) => html`
+                  <div 
+                    class="option ${this.feature === item.value ? 'selected' : ''} ${index === this.highlightedIndex ? 'highlighted' : ''}"
+                    @click=${() => this._selectFeature(item.value)}
+                    @mouseenter=${() => { this.highlightedIndex = index; this.requestUpdate() }}
+                    role="option"
+                    aria-selected=${this.feature === item.value}
+                  >
+                    <span class="option-label">${item.label}</span>
+                    <span class="option-value">${item.value}</span>
+                  </div>
+                `)}
               `}
             </div>
           </div>
@@ -441,11 +432,14 @@ function App() {
   }
 
   embedCodeTemplate() {
+    const script = import.meta.env.PROD ?
+      `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
+      : 'https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js'
     return html`
       <h3>嵌入脚本</h3>
       <p>在您的文档中嵌入以下 JavaScript 文件：</p>
       <div class="code-block">
-        <pre><code>&lt;script src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"&gt;&lt;/script&gt;</code></pre>
+        <pre><code>&lt;script src="${script}"&gt;&lt;/script&gt;</code></pre>
       </div>
       
       <h3>获取嵌入代码</h3>
@@ -458,7 +452,7 @@ function App() {
 
   liveDemoTemplate() {
     return html`
-      <demo-section class="live-demo-section">
+      <demo-section>
         <h2>🌐 实时演示</h2>
         ${this.featureSelectTemplate()}
         ${this.settingsTemplate()}
@@ -467,7 +461,15 @@ function App() {
         <div class="live-demo">
           <caniuse-embed feature="${this.feature}" past="${this.past}" future="${this.future}" theme="${this.theme}"></caniuse-embed>
         </div>
-        <p>JS 中可以使用 <code class="inline-code">document.createElement</code> 动态创建元素，查看效果：</p>
+      </demo-section>
+    `
+  }
+
+  dynamicDemoTemplate() {
+    return html`
+      <demo-section class="dynamic-demo-section">
+        <h2>⛰️ 动态创建元素</h2>
+        <p>和原生元素一样，在 JS 中可以使用 <code class="inline-code">document.createElement</code> 动态创建元素，点击创建查看效果：</p>
         <p>
           <input type="text" @input=${this._onFeatureInputChange} value=${this.featureInput} placeholder="输入特性名称" />
           <button @click=${this._createElementDynamically} part="button">创建</button>
@@ -487,6 +489,7 @@ function App() {
       ${this.frameworkIntegrationTemplate()}
       ${this.propsTemplate()}
       ${this.liveDemoTemplate()}
+      ${this.dynamicDemoTemplate()}
 
       <github-corner></github-corner>
     `

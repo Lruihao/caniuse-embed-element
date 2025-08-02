@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies and Build demo
         run: |
           pnpm install --frozen-lockfile
-          pnpm build
+          pnpm build && pnpm build:iife
           touch dist-demo/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite'
+import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
+import { join } from 'node:path'
 
 export default defineConfig({
   build: {
@@ -17,4 +19,22 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: false,
   },
+  plugins: [
+    {
+      name: 'copy-iife-to-demo',
+      writeBundle() {
+        const sourceFile = 'dist/caniuse-embed-element.iife.js'
+        const targetDir = 'dist-demo'
+        const targetFile = join(targetDir, 'embed.js')
+        
+        if (existsSync(sourceFile)) {
+          if (!existsSync(targetDir)) {
+            mkdirSync(targetDir, { recursive: true })
+          }
+          copyFileSync(sourceFile, targetFile)
+          console.log(`✓ Copied ${sourceFile} to ${targetFile}`)
+        }
+      },
+    },
+  ],
 })
