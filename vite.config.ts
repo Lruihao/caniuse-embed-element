@@ -11,6 +11,6 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       DEFAULT_ORIGIN: JSON.stringify(env.VITE_DEFAULT_ORIGIN || 'https://caniuse.lruihao.cn'),
-    }
+    },
   }
 })

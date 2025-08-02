@@ -11,7 +11,6 @@ import { customElement, property } from 'lit/decorators.js'
  */
 @customElement('github-corner')
 export class GithubCorner extends LitElement {
-
   @property({ type: String })
   repoUrl = 'https://github.com/Lruihao/caniuse-embed-element'
 

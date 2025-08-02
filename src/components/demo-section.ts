@@ -3,12 +3,11 @@ import { customElement } from 'lit/decorators.js'
 
 /**
  * A section for displaying demos or examples within the documentation.
- * 
+ *
  * @slot - The default slot for the demo content
  */
 @customElement('demo-section')
 export class DemoSection extends LitElement {
-
   render() {
     return html`
       <slot></slot>

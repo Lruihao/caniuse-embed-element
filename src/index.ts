@@ -1,17 +1,16 @@
+import type { CaniuseEmbedElementProps } from './caniuse-embed-element'
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { repeat } from 'lit/directives/repeat.js'
 import './caniuse-embed-element'
 import './components/demo-section'
 import './components/github-corner'
-import type { CaniuseEmbedElementProps } from './caniuse-embed-element'
 import './styles/index.css'
 
 interface SelectItem {
   label: string
   value: string
 }
-
 
 @customElement('caniuse-embed-app')
 export class CaniuseEmbedApp extends LitElement {
@@ -114,11 +113,12 @@ export class CaniuseEmbedApp extends LitElement {
   private _filterFeatures() {
     if (!this.searchTerm.trim()) {
       this._filteredFeatureList = [...this._featureList]
-    } else {
+    }
+    else {
       const searchLower = this.searchTerm.toLowerCase()
       this._filteredFeatureList = this._featureList.filter(item =>
-        item.label.toLowerCase().includes(searchLower) ||
-        item.value.toLowerCase().includes(searchLower)
+        item.label.toLowerCase().includes(searchLower)
+        || item.value.toLowerCase().includes(searchLower),
       )
     }
     this.highlightedIndex = -1 // 重置高亮索引
@@ -175,12 +175,12 @@ export class CaniuseEmbedApp extends LitElement {
 
   private _onPastVersionChange(event: Event) {
     const target = event.target as HTMLInputElement
-    this.past = parseInt(target.value) as CaniuseEmbedElementProps['past']
+    this.past = Number.parseInt(target.value) as CaniuseEmbedElementProps['past']
   }
 
   private _onFutureVersionChange(event: Event) {
     const target = event.target as HTMLInputElement
-    this.future = parseInt(target.value) as CaniuseEmbedElementProps['future']
+    this.future = Number.parseInt(target.value) as CaniuseEmbedElementProps['future']
   }
 
   private _onFeatureInputChange(event: Event) {
@@ -359,7 +359,8 @@ function App() {
           <span class="select-value">${displayValue}</span>
           <span class="select-arrow ${this.dropdownOpen ? 'open' : ''}">▼</span>
         </div>
-        ${this.dropdownOpen ? html`
+        ${this.dropdownOpen
+          ? html`
           <div class="select-dropdown" role="listbox">
             <div class="search-container">
               <input 
@@ -376,11 +377,11 @@ function App() {
             <div class="options-container">
               ${this._filteredFeatureList.length === 0
                 ? html`<div class="no-results">未找到匹配的特性</div>`
-                : html`${repeat(this._filteredFeatureList, (item) => item.value, (item, index) => html`
+                : html`${repeat(this._filteredFeatureList, item => item.value, (item, index) => html`
                   <div 
                     class="option ${this.feature === item.value ? 'selected' : ''} ${index === this.highlightedIndex ? 'highlighted' : ''}"
                     @click=${() => this._selectFeature(item.value)}
-                    @mouseenter=${() => { this.highlightedIndex = index; this.requestUpdate() }}
+                    @mouseenter=${() => { this.highlightedIndex = index }}
                     role="option"
                     aria-selected=${this.feature === item.value}
                   >
@@ -391,7 +392,8 @@ function App() {
               `}
             </div>
           </div>
-        ` : ''}
+        `
+          : ''}
       </div>
     `
   }
@@ -432,8 +434,8 @@ function App() {
   }
 
   embedCodeTemplate() {
-    const script = import.meta.env.PROD ?
-      `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
+    const script = import.meta.env.PROD
+      ? `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
       : 'https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js'
     return html`
       <h3>嵌入脚本</h3>
