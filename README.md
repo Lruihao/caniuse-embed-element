@@ -147,7 +147,7 @@ For older browsers, consider using polyfills:
 ### Prerequisites
 
 - Node.js 20+
-- pnpm 9+
+- pnpm 10+
 
 ### Setup
 
