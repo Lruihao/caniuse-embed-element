@@ -65,7 +65,7 @@ export class CaniuseEmbedElement extends LitElement {
    * @default "https://caniuse.lruihao.cn"
    */
   @property()
-  origin = 'https://caniuse.lruihao.cn'
+  origin = DEFAULT_ORIGIN
 
   /**
    * The color theme for the embedded content.
@@ -186,7 +186,7 @@ export class CaniuseEmbedElement extends LitElement {
   render() {
     const source = this.generateSource()
     if (!source) {
-      return html`<p class="ciu-embed-empty"><span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br><span>See more at <a href="https://caniuse.lruihao.cn" target="_blank">caniuse.lruihao.cn</a>.</span></p>`
+      return html`<p class="ciu-embed-empty"><span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br><span>[ The feature parameter is required! ]</span></p>`
     }
 
     return html`<iframe class="ciu-embed-iframe" src="${source}" height="${this._iframeHeight}" allow="fullscreen" loading="${this.loading}"></iframe>`

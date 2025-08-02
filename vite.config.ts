@@ -9,5 +9,8 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist-demo',
     },
+    define: {
+      DEFAULT_ORIGIN: JSON.stringify(env.VITE_DEFAULT_ORIGIN || 'https://caniuse.lruihao.cn'),
+    }
   }
 })
