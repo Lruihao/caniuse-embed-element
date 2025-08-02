@@ -6,6 +6,25 @@ npm install @cell-x/caniuse-embed-element
 
 This package provides TypeScript declarations for popular frameworks to ensure proper type safety and IntelliSense support.
 
+## Vanilla JavaScript/HTML
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script async src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"></script>
+</head>
+<body>
+  <caniuse-embed
+    feature="css-grid"
+    theme="dark"
+    past="3"
+    future="2">
+  </caniuse-embed>
+</body>
+</html>
+```
+
 ## Vue 3
 
 > [!TIP]
@@ -120,23 +139,4 @@ function App() {
     </div>
   )
 }
-```
-
-## Vanilla JavaScript/HTML
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <script type="module" src="https://unpkg.com/@cell-x/caniuse-embed-element"></script>
-</head>
-<body>
-  <caniuse-embed
-    feature="css-grid"
-    theme="dark"
-    past="3"
-    future="2">
-  </caniuse-embed>
-</body>
-</html>
 ```
