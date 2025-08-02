@@ -81,6 +81,34 @@
     },
     {
       "kind": "javascript-module",
+      "path": "dist/caniuse-embed-element.umd.cjs",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.umd.cjs"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "r",
+          "declaration": {
+            "name": "t",
+            "module": "dist/caniuse-embed-element.umd.cjs"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/caniuse-embed-element.ts",
       "declarations": [
         {

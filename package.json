@@ -18,10 +18,8 @@
     "web-components",
     "custom-elements",
     "lit",
-    "caniuse",
+    "caniuse-embed",
     "browser-compatibility",
-    "iframe",
-    "typescript",
     "browser-support"
   ],
   "main": "dist/caniuse-embed-element.js",
@@ -43,7 +41,7 @@
     "build:all": "npm run build && npm run build:lib && npm run build:iife && npm run manifest",
     "lint": "eslint .",
     "preview": "vite preview",
-    "manifest": "custom-elements-manifest analyze --litelement --exclude dist-demo --exclude src/index.ts"
+    "manifest": "cem analyze --litelement --globs dist --globs src/caniuse-embed-element.ts"
   },
   "dependencies": {
     "lit": "^3.3.1"

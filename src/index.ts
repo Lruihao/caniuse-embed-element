@@ -1,7 +1,14 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import './caniuse-embed-element'
+import './components/demo-section'
+import './components/github-corner'
 import type { CaniuseEmbedElementProps } from './caniuse-embed-element'
+
+interface SelectOption {
+  label: string
+  value: string
+}
 
 @customElement('caniuse-embed-app')
 export class CaniuseEmbedApp extends LitElement {
@@ -9,7 +16,19 @@ export class CaniuseEmbedApp extends LitElement {
   theme: CaniuseEmbedElementProps['theme'] = 'auto'
 
   @property({ type: String })
-  feature = ''
+  featureInput = ''
+
+  private _featureList: SelectOption[] = []
+
+  connectedCallback() {
+    super.connectedCallback()
+    this._getFeatureList()
+  }
+
+  private async _getFeatureList() {
+    this._featureList = await fetch('https://caniuse.lruihao.cn/features.json').then(res => res.json())
+    console.log('Feature list loaded:', this._featureList)
+  }
 
   private _toggleTheme() {
     const themes: CaniuseEmbedElementProps['theme'][] = ['auto', 'light', 'dark']
@@ -18,7 +37,7 @@ export class CaniuseEmbedApp extends LitElement {
 
   private _createElementDynamically() {
     const dynamicElement = document.createElement('caniuse-embed')
-    dynamicElement.feature = this.feature
+    dynamicElement.feature = this.featureInput
     const liveDemo = document.createElement('div')
     liveDemo.className = 'live-demo'
     liveDemo.appendChild(dynamicElement)
@@ -28,9 +47,9 @@ export class CaniuseEmbedApp extends LitElement {
   render() {
     return html`
       <h1 class="text-center">🧩 &lt;caniuse-embed&gt; Element</h1>
-      <p class="text-center">一个自定义的 Web 组件，用于嵌入 caniuse.com 的特定功能的浏览器兼容性数据。</p>
+      <p class="text-center">一个用于嵌入 caniuse.com 的特定功能的浏览器兼容性数据的自定义 Web 组件。</p>
 
-      <div class="demo-section">
+      <demo-section>
         <h2>🎯 主要特性</h2>
         <p>使用 <a href="https://lit.dev" target="_blank">Lit</a> 构建，由 <a href="https://github.com/Lruihao/caniuse-embed-element" target="_blank">@Lruihao</a> 开发。</p>
         <ul>
@@ -41,9 +60,9 @@ export class CaniuseEmbedApp extends LitElement {
           <li>✅ 响应式设计</li>
           <li>✅ 现代 Web Components 标准</li>
         </ul>
-      </div>
+      </demo-section>
 
-      <div class="demo-section">
+      <demo-section>
         <h2>📦 安装</h2>
         <p>使用 npm 安装：</p>
         <div class="code-block">
@@ -53,89 +72,9 @@ export class CaniuseEmbedApp extends LitElement {
         <div class="code-block">
           <pre><code>&lt;script src="https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js"&gt;&lt;/script&gt;</code></pre>
         </div>
-      </div>
+      </demo-section>
 
-      <div class="demo-section live-demo-section">
-        <h2>🌐 实时演示</h2>
-        <p>以下是一些实际运行的组件示例：</p>
-        <p>指定特性（<code class="inline-code">feature</code>）</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid"></caniuse-embed>
-        </div>
-        <p>不指定 <code class="inline-code">feature</code>时：</p>
-        <div class="live-demo">
-          <caniuse-embed></caniuse-embed>
-        </div>
-        <p>显示过去 3 个版本（<code class="inline-code">past</code>）：</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" past="3"></caniuse-embed>
-        </div>
-        <p>显示未来 2 个版本（<code class="inline-code">future</code>）：</p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" future="2"></caniuse-embed>
-        </div>
-        <p>自定义数据源（<code class="inline-code">origin</code>）：<code class="inline-code">https://caniuse.pengzhanbo.cn</code></p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" origin="https://caniuse.pengzhanbo.cn"></caniuse-embed>
-        </div>
-        <p>主题切换（当前为：<code class="inline-code">${this.theme}</code>）：<button @click=${this._toggleTheme} part="button">切换</button></p>
-        <div class="live-demo">
-          <caniuse-embed feature="css-grid" theme="${this.theme}"></caniuse-embed>
-        </div>
-        <p>动态创建元素：</p>
-        <p>
-          输入 <code class="inline-code">feature</code> 查看效果：
-          <input type="text" @input=${(e: Event) => {
-            const target = e.target as HTMLInputElement
-            this.feature = target.value
-          }} value=${this.feature} placeholder="输入特性名称" />
-          <button @click=${this._createElementDynamically} part="button">创建</button>
-        </p>
-      </div>
-
-      <div class="demo-section">
-        <h2>🛠️ 支持的属性</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>属性</th>
-              <th>说明</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>feature</strong></td>
-              <td>要显示的浏览器兼容性功能名称，详见：<a href="https://caniuse.lruihao.cn/">https://caniuse.lruihao.cn</a></td>
-            </tr>
-            <tr>
-              <td><strong>past</strong></td>
-              <td>显示过去的主版本数量 (0-5)，默认：<code class="inline-code">3</code></td>
-            </tr>
-            <tr>
-              <td><strong>future</strong></td>
-              <td>显示未来的主版本数量 (0-3)，默认：<code class="inline-code">2</code></td>
-            </tr>
-            <tr>
-              <td><strong>origin</strong></td>
-              <td>自定义数据源，默认：<code class="inline-code">https://caniuse.lruihao.cn</code></td>
-            </tr>
-            <tr>
-              <td><strong>theme</strong></td>
-              <td>主题 ('auto' | 'light' | 'dark')，默认：<code class="inline-code">auto</code></td>
-            </tr>
-            <tr>
-              <td><strong>loading</strong></td>
-              <td>iframe 的加载策略 ('eager' | 'lazy')，默认：<code class="inline-code">eager</code></td>
-            </tr>
-            <tr>
-              <td><strong>meta</strong></td>
-              <td>唯一标识符（自动生成）</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="demo-section">
+      <demo-section>
         <h2>👾 框架集成</h2>
         <p>🟢 Vue 3 集成</p>
         <div class="code-block">
@@ -173,23 +112,79 @@ function App() {
 }</code></pre>
         </div>
         <p>💡 更多信息请查看文档 <a href="https://github.com/Lruihao/caniuse-embed-element/blob/main/FRAMEWORK_INTEGRATION.md#vue-3" target="_blank">FRAMEWORK_INTEGRATION.md</a></p>
-      </div>
+      </demo-section>
 
-      <a href="https://github.com/Lruihao/caniuse-embed-element" class="github-corner" aria-label="View source on GitHub" target="_blank">
-        <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
-          <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" />
-          <path
-            d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-            fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm" />
-          <path
-            d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-            fill="currentColor" class="octo-body" />
-        </svg>
-      </a>
+      <demo-section class="live-demo-section">
+        <h2>🌐 实时演示</h2>
+        <div class="live-demo">
+          <caniuse-embed></caniuse-embed>
+        </div>
+        <h3>选择特性</h3>
+        <p>你想展示什么特性？</p>
+        <p>主题切换（当前为：<code class="inline-code">${this.theme}</code>）：<button @click=${this._toggleTheme} part="button">切换</button></p>
+        <div class="live-demo">
+          <caniuse-embed feature="css-grid" theme="${this.theme}"></caniuse-embed>
+        </div>
+        <p>
+          和原生元素一样，也可以使用 <code class="inline-code">document.createElement</code> 动态创建元素，查看效果：
+          <input type="text" @input=${(e: Event) => {
+            const target = e.target as HTMLInputElement
+            this.featureInput = target.value
+          }} value=${this.featureInput} placeholder="输入特性名称" />
+          <button @click=${this._createElementDynamically} part="button">创建</button>
+        </p>
+      </demo-section>
+
+      <demo-section>
+        <h2>🛠️ 支持的属性</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>属性</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>feature</strong></td>
+              <td>要显示的浏览器兼容性功能名称，详见：<a href="https://caniuse.lruihao.cn/">https://caniuse.lruihao.cn</a></td>
+            </tr>
+            <tr>
+              <td><strong>past</strong></td>
+              <td>显示过去的主版本数量 (0-5)，默认：<code class="inline-code">3</code></td>
+            </tr>
+            <tr>
+              <td><strong>future</strong></td>
+              <td>显示未来的主版本数量 (0-3)，默认：<code class="inline-code">2</code></td>
+            </tr>
+            <tr>
+              <td><strong>origin</strong></td>
+              <td>自定义数据源，默认：<code class="inline-code">https://caniuse.lruihao.cn</code></td>
+            </tr>
+            <tr>
+              <td><strong>theme</strong></td>
+              <td>主题 ('auto' | 'light' | 'dark')，默认：<code class="inline-code">auto</code></td>
+            </tr>
+            <tr>
+              <td><strong>loading</strong></td>
+              <td>iframe 的加载策略 ('eager' | 'lazy')，默认：<code class="inline-code">lazy</code></td>
+            </tr>
+            <tr>
+              <td><strong>meta</strong></td>
+              <td>唯一标识符（自动生成）</td>
+            </tr>
+          </tbody>
+        </table>
+      </demo-section>
+
+      <github-corner></github-corner>
     `
   }
 
   static styles = css`
+    .text-center {
+      text-align: center;
+    }
     a {
       font-weight: 500;
       color: #007acc;
@@ -215,6 +210,7 @@ function App() {
       font-family: inherit;
       cursor: pointer;
       border-color: #ddd;
+      background-color: var(--button-background-color);
       transition: border-color 0.25s;
     }
     input:hover,
@@ -226,10 +222,9 @@ function App() {
     button:focus-visible {
       outline: 4px auto -webkit-focus-ring-color;
     }
-    .inline-code {
-      background-color: var(--code-background-color);
-      padding: 0.2rem 0.4rem;
-      border-radius: 4px;
+    pre {
+      margin: 0;
+      line-height: 1.45;
     }
     table {
       width: 100%;
@@ -248,85 +243,10 @@ function App() {
     tr:nth-child(even) {
       background-color: var(--tr-even-background-color);
     }
-    .demo-section {
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px var(--demo-shadow);
-    }
-    .code-block {
-      background: var(--code-background-color);
-      padding: 15px;
+    .inline-code  {
+      background-color: var(--code-background-color);
+      padding: 0.2rem 0.4rem;
       border-radius: 4px;
-      overflow-x: auto;
-      margin: 10px 0;
-      border-left: 4px solid #007acc;
-    }
-    pre {
-      margin: 0;
-      overflow-x: auto;
-      line-height: 1.45;
-    }
-    .text-center {
-      text-align: center;
-    }
-    h2 {
-      color: #007acc;
-      border-bottom: 2px solid #007acc;
-      padding-bottom: 5px;
-    }
-    .live-demo {
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 15px;
-      margin: 15px 0;
-    }
-    .github-corner:hover .octo-arm {
-      animation: octocat-wave 560ms ease-in-out;
-    }
-    .github-corner svg {
-      fill: #151513;
-      color: #fff;
-      position: fixed;
-      top: 0;
-      border: 0;
-      right: 0;
-    }
-
-    @keyframes octocat-wave {
-      0%,
-      100% {
-        transform: rotate(0);
-      }
-      20%,
-      60% {
-        transform: rotate(-25deg);
-      }
-      40%,
-      80% {
-        transform: rotate(10deg);
-      }
-    }
-    @media only screen and (max-width: 680px) {
-      .live-demo {
-        padding: 0;
-      }
-      .live-demo:has(caniuse-embed[feature]) {
-        border: none;
-      }
-      .demo-section {
-        padding: 15px;
-        margin: 15px 0;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .github-corner:hover .octo-arm {
-        animation: none;
-      }
-      .github-corner .octo-arm {
-        animation: octocat-wave 560ms ease-in-out;
-      }
     }
   `
 }
