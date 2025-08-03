@@ -1,7 +1,7 @@
 {
   "name": "@cell-x/caniuse-embed-element",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packageManager": "pnpm@10.14.0",
   "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
   "author": "Lruihao (https://lruihao.cn)",
