@@ -52,7 +52,7 @@ import '@cell-x/caniuse-embed-element'
 
 ## Vue 2
 
-[Live Demo](https://github.com/Lruihao/vue-el-demo/#/caniuse-embed-element)
+[Live Demo](https://lruihao.github.io/vue-el-demo/#/caniuse-embed-element)
 
 ```vue
 <template>
@@ -68,6 +68,10 @@ import '@cell-x/caniuse-embed-element'
 
 <script>
 import '@cell-x/caniuse-embed-element'
+
+export default {
+  name: 'MyComponent',
+}
 </script>
 ```
 
