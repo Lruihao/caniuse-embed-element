@@ -50,6 +50,27 @@ import '@cell-x/caniuse-embed-element'
 </template>
 ```
 
+## Vue 2
+
+[Live Demo](https://github.com/Lruihao/vue-el-demo/#/caniuse-embed-element)
+
+```vue
+<template>
+  <div>
+    <caniuse-embed
+      feature="css-grid"
+      theme="dark"
+      :past="3"
+      :future="2"
+    />
+  </div>
+</template>
+
+<script>
+import '@cell-x/caniuse-embed-element'
+</script>
+```
+
 ## React
 
 Declare the custom element in your React project by adding the following to your `index.d.ts` or a similar type declaration file:
