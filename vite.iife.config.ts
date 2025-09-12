@@ -1,6 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
+import minifyHtmlLiterals from '@lit-labs/rollup-plugin-minify-html-literals'
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
@@ -17,6 +18,27 @@ export default defineConfig(({ mode }) => {
           // make sure all dependencies are bundled into one file
           inlineDynamicImports: true,
         },
+        plugins: [
+          minifyHtmlLiterals({
+            options: {
+              minifyOptions: {
+                removeComments: true,
+                collapseWhitespace: true,
+                minifyCSS: true,
+                minifyJS: false,
+                caseSensitive: true,
+                removeEmptyElements: false,
+                // strict whitespace handling
+                ignoreCustomFragments: [],
+                processConditionalComments: false,
+                removeAttributeQuotes: false,
+                removeRedundantAttributes: false,
+                removeScriptTypeAttributes: false,
+                removeStyleLinkTypeAttributes: false,
+              },
+            },
+          }),
+        ],
       },
       copyPublicDir: false,
       outDir: 'dist',
