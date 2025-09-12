@@ -32,11 +32,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-      - uses: pnpm/action-setup@v4
+          cache: pnpm
       - name: Install dependencies and Build demo
         run: |
           pnpm install --frozen-lockfile
