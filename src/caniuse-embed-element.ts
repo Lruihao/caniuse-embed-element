@@ -95,6 +95,16 @@ export class CaniuseEmbedElement extends LitElement {
   meta = Math.random().toString(36).slice(2)
 
   /**
+   * Indicates whether the iframe content has finished loading.
+   * Used to control the visibility of loading state and iframe content.
+   * This property is used via CSS attribute selectors through the reflect: true option.
+   * @private
+   */
+  @property({ type: Boolean, reflect: true })
+  // @ts-expect-error - Property is used via CSS attribute selectors
+  private loaded = false
+
+  /**
    * The current height of the embedded iframe in pixels.
    * Automatically updated based on content size via postMessage communication.
    * @private
@@ -146,6 +156,14 @@ export class CaniuseEmbedElement extends LitElement {
   }
 
   /**
+   * Handles iframe load event as a fallback for setting loaded state.
+   * @private
+   */
+  private handleIframeLoad = () => {
+    this.loaded = true
+  }
+
+  /**
    * Safely parses incoming message data, handling both string and object formats.
    * @param data - The raw data from a postMessage event
    * @returns Parsed data object or empty object if parsing fails
@@ -186,17 +204,98 @@ export class CaniuseEmbedElement extends LitElement {
   render() {
     const source = this.generateSource()
     if (!source) {
-      return html`<p class="ciu-embed-empty"><span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br><span>[ The feature parameter is required! ]</span></p>`
+      this.loaded = true
+      return html`
+        <p class="ciu-embed-empty">
+          <span>Data on support for the features across the major browsers from <a href="https://caniuse.com" target="_blank">caniuse.com</a>.</span><br>
+          <span>[ The feature parameter is required! ]</span>
+        </p>`
     }
 
-    return html`<iframe class="ciu-embed-iframe" src="${source}" height="${this._iframeHeight}" allow="fullscreen" loading="${this.loading}"></iframe>`
+    return html`
+      <iframe 
+        class="ciu-embed-iframe" 
+        src="${source}" 
+        height="${this._iframeHeight}" 
+        allow="fullscreen" 
+        loading="${this.loading}"
+        @load="${this.handleIframeLoad}"
+      ></iframe>`
   }
 
   /**
    * CSS styles for the component.
    * Defines styling for the host element, iframe, and empty state message.
    */
-  static styles = css`:host { display: block; width: 100%; }.ciu-embed-iframe { display: block; width: 100%; border: none; border-radius: 0; }.ciu-embed-empty { color: var(--text-secondary, #919191); text-align: center; font-size: 12px; }.ciu-embed-empty a { color: inherit; text-decoration: none; }.ciu-embed-empty a:hover { text-decoration: underline; }`
+  static styles = css`
+    :host { 
+      display: block; 
+      width: 100%; 
+      position: relative;
+    }
+
+    :host(:not([loaded]))::after {
+      content: "Loading " attr(feature) " compatibility data";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--text-secondary, #919191);
+      font-size: 14px;
+      text-align: center;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+      animation: loading-dots 1.5s infinite;
+    }
+
+    @keyframes loading-dots {
+      0%, 20% {
+        content: "Loading " attr(feature) " compatibility data";
+      }
+      40% {
+        content: "Loading " attr(feature) " compatibility data.";
+      }
+      60% {
+        content: "Loading " attr(feature) " compatibility data..";
+      }
+      80%, 100% {
+        content: "Loading " attr(feature) " compatibility data...";
+      }
+    }
+    
+    :host([loaded])::after {
+      opacity: 0;
+    }
+    
+    .ciu-embed-iframe { 
+      display: block; 
+      width: 100%; 
+      border: none; 
+      border-radius: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    :host([loaded]) .ciu-embed-iframe {
+      opacity: 1;
+    }
+    
+    .ciu-embed-empty { 
+      color: var(--text-secondary, #919191); 
+      text-align: center; 
+      font-size: 12px; 
+    }
+    
+    .ciu-embed-empty a { 
+      color: inherit; 
+      text-decoration: none; 
+    }
+    
+    .ciu-embed-empty a:hover { 
+      text-decoration: underline; 
+    }`
 }
 
 declare global {
