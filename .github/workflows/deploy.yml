@@ -45,7 +45,7 @@ jobs:
           pnpm build && pnpm build:iife
           touch dist-demo/.nojekyll
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload only the public directory
           path: ./dist-demo
