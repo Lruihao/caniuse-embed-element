@@ -5,8 +5,31 @@
 
 version: 2
 updates:
-  - package-ecosystem: github-actions # See documentation for possible values
+  - package-ecosystem: npm # See documentation for possible values
     directory: / # Location of package manifests
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1000
+    assignees:
+      - Lruihao
+    labels:
+      - dependencies
+    ignore:
+      - dependency-name: '@types/node'
+        update-types:
+          - 'version-update:semver-major'
+    groups:
+      npm-development:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      npm-production:
+        dependency-type: production
+        update-types:
+          - patch
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 1000
