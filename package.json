@@ -45,7 +45,7 @@
     "lit": "^3.3.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^5.4.1",
+    "@antfu/eslint-config": "^6.2.0",
     "@custom-elements-manifest/analyzer": "^0.10.10",
     "@lit-labs/rollup-plugin-minify-html-literals": "^0.1.0",
     "auto-changelog-plus": "^1.2.1",
