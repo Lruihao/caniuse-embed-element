@@ -2,7 +2,7 @@
   "name": "@cell-x/caniuse-embed-element",
   "type": "module",
   "version": "1.1.1",
-  "packageManager": "pnpm@10.15.1",
+  "packageManager": "pnpm@10.20.0",
   "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
   "author": "Lruihao (https://lruihao.cn)",
   "license": "MIT",
