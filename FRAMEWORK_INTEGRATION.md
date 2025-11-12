@@ -33,6 +33,47 @@ This package provides TypeScript declarations for popular frameworks to ensure p
 >
 > To let Vue know that certain elements should be treated as custom elements and skip component resolution, we can specify the [`compilerOptions.isCustomElement` option](https://vuejs.org/api/application.html#app-config-compileroptions).
 
+```js
+// vite.config.js
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          // treat all tags with a dash as custom elements
+          isCustomElement: tag => tag.includes('-')
+        }
+      }
+    }),
+    vueJsx({
+      // treat all tags with a dash as custom elements
+      isCustomElement: tag => tag.includes('-')
+    }),
+  ]
+}
+```
+
+If you're using ESLint with Vue, you may need to configure it to ignore the custom element:
+
+```js
+// eslint.config.js
+export default {
+  rules: {
+    'vue/component-name-in-template-casing': [
+      'warn',
+      'PascalCase',
+      {
+        registeredComponentsOnly: false,
+        ignores: ['/^icon-/', 'caniuse-embed'],
+      },
+    ],
+  },
+}
+```
+
 ```vue
 <script setup>
 import '@cell-x/caniuse-embed-element'
