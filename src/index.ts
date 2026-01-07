@@ -495,9 +495,7 @@ function App() {
   }
 
   embedCodeTemplate() {
-    const script = import.meta.env.PROD
-      ? `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
-      : 'https://unpkg.com/@cell-x/caniuse-embed-element/dist/caniuse-embed-element.iife.js'
+    const script = `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
     return html`
       <h3>嵌入脚本</h3>
       <p>在您的文档中嵌入以下 JavaScript 文件：</p>

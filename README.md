@@ -7,7 +7,7 @@ English | [简体中文](./README.zh-cn.md)
 
 A lightweight, customizable web component that embeds [caniuse.com](https://caniuse.com) browser compatibility data for specific web features. Built with [Lit](https://lit.dev/) and designed to seamlessly integrate into any web project.
 
-[🌟 **Live Demo**](https://lruihao.github.io/caniuse-embed-element/)
+[🌟 **Live Demo**](https://caniuse-el.lruihao.cn)
 
 ![caniuse example](./preview/caniuse.webp)
 

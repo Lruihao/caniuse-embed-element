@@ -7,7 +7,7 @@
 
 一个轻量级、可定制的 Web 组件，用于嵌入 [caniuse.com](https://caniuse.com) 的特定 Web 功能的浏览器兼容性数据。使用 [Lit](https://lit.dev/) 构建，设计为可无缝集成到任何 Web 项目中。
 
-[🌟 **在线演示**](./preview/caniuse.webp.io/caniuse-embed-element/)
+[🌟 **在线演示**](https://caniuse-el.lruihao.cn)
 
 ![caniuse 示例](./preview/caniuse.webp)
 

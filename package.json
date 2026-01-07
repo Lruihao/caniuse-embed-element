@@ -6,7 +6,7 @@
   "description": "A custom web component that embeds caniuse.com browser compatibility data for a specific feature.",
   "author": "Lruihao (https://lruihao.cn)",
   "license": "MIT",
-  "homepage": "https://lruihao.github.io/caniuse-embed-element/",
+  "homepage": "https://caniuse-el.lruihao.cn",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lruihao/caniuse-embed-element.git"
