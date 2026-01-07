@@ -9,7 +9,7 @@
 
 [🌟 **在线演示**](./preview/caniuse.webp.io/caniuse-embed-element/)
 
-![caniuse 示例](../preview/baseline.png)
+![caniuse 示例](./preview/caniuse.webp)
 
 ![baseline 示例](./preview/baseline.png)
 
