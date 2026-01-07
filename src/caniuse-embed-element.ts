@@ -24,6 +24,7 @@ export interface CaniuseEmbedElementProps {
   theme?: 'auto' | 'light' | 'dark'
   loading?: 'eager' | 'lazy'
   meta?: string
+  baseline?: boolean
 }
 
 /**
@@ -63,6 +64,14 @@ export class CaniuseEmbedElement extends LitElement {
    */
   @property({ type: Number })
   future: 0 | 1 | 2 | 3 = 1
+
+  /**
+   * Whether to use baseline (simplified) view for the compatibility data.
+   * When true, shows a more compact version of the data.
+   * @default false
+   */
+  @property({ type: Boolean })
+  baseline: boolean = false
 
   /**
    * The base URL of the caniuse embed service.
@@ -114,7 +123,7 @@ export class CaniuseEmbedElement extends LitElement {
    * Automatically updated based on content size via postMessage communication.
    * @private
    */
-  private _iframeHeight = 500
+  private _iframeHeight = this.baseline ? 150 : 300
 
   /**
    * Called when the element is added to the DOM.
@@ -198,7 +207,7 @@ export class CaniuseEmbedElement extends LitElement {
       `future=${this.future}`,
       `theme=${this.theme}`,
     ]
-    return `${this.origin}/${this.feature}#${params.join('&')}`
+    return `${this.origin}/${this.feature}${this.baseline ? '/baseline' : ''}#${params.join('&')}`
   }
 
   /**

@@ -3,6 +3,8 @@
 [![npm version](https://img.shields.io/npm/v/@cell-x/caniuse-embed-element.svg)](https://www.npmjs.com/package/@cell-x/caniuse-embed-element)
 [![License](https://img.shields.io/npm/l/%40cell-x%2Fcaniuse-embed-element.svg)](https://github.com/Lruihao/caniuse-embed-element/blob/main/LICENSE)
 
+English | [简体中文](./README.zh-cn.md)
+
 A lightweight, customizable web component that embeds [caniuse.com](https://caniuse.com) browser compatibility data for specific web features. Built with [Lit](https://lit.dev/) and designed to seamlessly integrate into any web project.
 
 [🌟 **Live Demo**](https://lruihao.github.io/caniuse-embed-element/)
@@ -54,6 +56,14 @@ import '@cell-x/caniuse-embed-element'
 <caniuse-embed feature="css-grid"></caniuse-embed>
 ```
 
+### With Baseline Support
+
+Display browser compatibility baseline information for features:
+
+```html
+<caniuse-embed feature="css-grid" baseline></caniuse-embed>
+```
+
 ### With Custom Configuration
 
 ```html
@@ -62,13 +72,14 @@ import '@cell-x/caniuse-embed-element'
   theme="dark"
   past="3"
   future="2"
+  baseline
   origin="https://caniuse.lruihao.cn"
 ></caniuse-embed>
 ```
 
 ### Framework Integration
 
-Here's an example using Vue.js. For more framework integration examples, see [FRAMEWORK_INTEGRATION.md](FRAMEWORK_INTEGRATION.md).
+Here's an example using Vue.js. For more framework integration examples, see [FRAMEWORK_INTEGRATION.md](./FRAMEWORK_INTEGRATION.md).
 
 ```vue
 <script setup>
@@ -91,15 +102,26 @@ import '@cell-x/caniuse-embed-element'
 
 ### Attributes/Properties
 
-| Attribute | Type                          | Default                        | Description                                                                |
-| --------- | ----------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
-| `feature` | `string`                      | `''`                           | **Required**. The caniuse feature identifier (e.g., 'css-grid', 'flexbox') |
-| `past`    | `0 - 5`                       | `2`                            | Number of past browser versions to display                                 |
-| `future`  | `0 - 3`                       | `1`                            | Number of future browser versions to display                               |
-| `origin`  | `string`                      | `'https://caniuse.lruihao.cn'` | Base URL of the caniuse embed service                                      |
-| `theme`   | `'auto' \| 'light' \| 'dark'` | `'auto'`                       | Color theme for the embedded content                                       |
-| `loading` | `'eager' \| 'lazy'`           | `'lazy'`                       | Loading strategy for the iframe (eager or lazy)                            |
-| `meta`    | `string`                      | `auto-generated`               | Unique identifier for the embed instance                                   |
+| Attribute  | Type                          | Default                        | Description                                                                |
+| ---------- | ----------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
+| `feature`  | `string`                      | `''`                           | **Required**. The caniuse feature identifier (e.g., 'css-grid', 'flexbox') |
+| `past`     | `0 - 5`                       | `2`                            | Number of past browser versions to display                                 |
+| `future`   | `0 - 3`                       | `1`                            | Number of future browser versions to display                               |
+| `baseline` | `boolean`                     | `false`                        | Show baseline browser compatibility status (when available)                |
+| `origin`   | `string`                      | `'https://caniuse.lruihao.cn'` | Base URL of the caniuse embed service                                      |
+| `theme`    | `'auto' \| 'light' \| 'dark'` | `'auto'`                       | Color theme for the embedded content                                       |
+| `loading`  | `'eager' \| 'lazy'`           | `'lazy'`                       | Loading strategy for the iframe (eager or lazy)                            |
+| `meta`     | `string`                      | `auto-generated`               | Unique identifier for the embed instance                                   |
+
+### About Baseline
+
+The `baseline` attribute displays the [Baseline](https://web.dev/baseline) browser compatibility status for web features. When enabled, it shows whether a feature is:
+
+- **Widely Available** - Supported across all major browsers
+- **Newly Available** - Recently became available in major browsers
+- **Limited Availability** - Not yet available in all major browsers
+
+This provides a quick visual indicator of feature adoption and helps developers make informed decisions about using web platform features.
 
 ### Finding Feature Names
 
@@ -203,7 +225,7 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ## 🙏 Acknowledgements
 

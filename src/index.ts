@@ -39,6 +39,9 @@ export class CaniuseEmbedApp extends LitElement {
   @property({ type: Number })
   highlightedIndex = -1
 
+  @property({ type: Boolean })
+  baseline: CaniuseEmbedElementProps['baseline'] = false
+
   @property({ type: Number })
   private _scrollTop = 0
 
@@ -219,6 +222,11 @@ export class CaniuseEmbedApp extends LitElement {
     this.featureInput = target.value
   }
 
+  private _onBaselineToggle(event: Event) {
+    const target = event.target as HTMLInputElement
+    this.baseline = target.checked
+  }
+
   private _generateEmbedCode(): string {
     if (!this.feature) {
       return '<caniuse-embed></caniuse-embed>'
@@ -236,6 +244,10 @@ export class CaniuseEmbedApp extends LitElement {
 
     if (this.theme !== 'auto') {
       code += ` theme="${this.theme}"`
+    }
+
+    if (this.baseline) {
+      code += ` baseline`
     }
 
     code += '></caniuse-embed>'
@@ -346,6 +358,10 @@ function App() {
             <tr>
               <td><strong>future</strong></td>
               <td>显示未来的主版本数量 (0-3)，默认：<code class="inline-code">1</code></td>
+            </tr>
+            <tr>
+              <td><strong>baseline</strong></td>
+              <td>是否显示功能支持基线，默认：<code class="inline-code">false</code></td>
             </tr>
             <tr>
               <td><strong>origin</strong></td>
@@ -503,11 +519,31 @@ function App() {
         <h2 slot="title">🌐 实时演示</h2>
         ${this.featureSelectTemplate()}
         ${this.settingsTemplate()}
-        ${this.feature ? this.embedCodeTemplate() : ''}
-        <p class="text-right">主题切换：<button @click=${this._toggleTheme} part="button">${this.theme}</button></p>
-        <div class="live-demo">
-          <caniuse-embed feature="${this.feature}" past="${this.past}" future="${this.future}" theme="${this.theme}"></caniuse-embed>
+        <h3>嵌入预览</h3>
+        <div class="preview-controls">
+          <div class="control-left">
+            <label>功能支持基线：</label>
+            <input 
+              type="checkbox" 
+              .checked=${this.baseline}
+              @change=${this._onBaselineToggle}
+            />
+          </div>
+          <div class="control-right">
+            <span>主题切换：</span>
+            <button @click=${this._toggleTheme} part="button">${this.theme}</button>
+          </div>
         </div>
+        <div class="live-demo">
+          <caniuse-embed
+            feature="${this.feature}" 
+            past="${this.past}" 
+            future="${this.future}" 
+            theme="${this.theme}"
+            ?baseline=${this.baseline}
+          ></caniuse-embed>
+        </div>
+        ${this.feature ? this.embedCodeTemplate() : ''}
       </demo-section>
     `
   }
@@ -1013,6 +1049,43 @@ function App() {
 
       .slider {
         background: #444;
+      }
+    }
+
+    .preview-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 0;
+      gap: 20px;
+    }
+
+    .control-left,
+    .control-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-left label,
+    .control-right span {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .control-left input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #007acc;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .control-left label,
+      .control-right span {
+        color: #fff;
       }
     }
   `
