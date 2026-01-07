@@ -497,13 +497,11 @@ function App() {
   embedCodeTemplate() {
     const script = `${window.location.origin}${import.meta.env.BASE_URL}embed.js`
     return html`
-      <h3>嵌入脚本</h3>
+      <h3>嵌入代码</h3>
       <p>在您的文档中嵌入以下 JavaScript 文件：</p>
       <div class="code-block">
         <pre><code>&lt;script src="${script}"&gt;&lt;/script&gt;</code></pre>
       </div>
-      
-      <h3>获取嵌入代码</h3>
       <p>将此片段粘贴到您希望嵌入显示的位置：</p>
       <div class="code-block">
         <pre><code>${this._generateEmbedCode()}</code></pre>
@@ -933,6 +931,9 @@ function App() {
       font-weight: 500;
       color: #333;
       font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .option-label code {
@@ -949,6 +950,9 @@ function App() {
       font-size: 12px;
       color: #666;
       font-family: monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .no-results {
