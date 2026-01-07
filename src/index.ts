@@ -2,6 +2,7 @@ import type { CaniuseEmbedElementProps } from './caniuse-embed-element'
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { repeat } from 'lit/directives/repeat.js'
+import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import './caniuse-embed-element'
 import './components/demo-section'
 import './components/github-corner'
@@ -37,6 +38,15 @@ export class CaniuseEmbedApp extends LitElement {
 
   @property({ type: Number })
   highlightedIndex = -1
+
+  @property({ type: Number })
+  private _scrollTop = 0
+
+  @property({ type: Number })
+  private _itemHeight = 60 // 每个选项的高度
+
+  @property({ type: Number })
+  private _visibleCount = 8 // 可见选项数量
 
   private _featureList: SelectItem[] = []
 
@@ -101,11 +111,32 @@ export class CaniuseEmbedApp extends LitElement {
     }
   }
 
+  private _onOptionsScroll(event: Event) {
+    const target = event.target as HTMLElement
+    this._scrollTop = target.scrollTop
+    this.requestUpdate()
+  }
+
+  private _getVisibleRange() {
+    const start = Math.floor(this._scrollTop / this._itemHeight)
+    const end = Math.min(start + this._visibleCount + 2, this._filteredFeatureList.length)
+    return { start: Math.max(0, start - 1), end }
+  }
+
   private _scrollToHighlighted() {
     this.updateComplete.then(() => {
-      const highlighted = this.shadowRoot?.querySelector('.option.highlighted') as HTMLElement
-      if (highlighted) {
-        highlighted.scrollIntoView({ block: 'nearest' })
+      const optionsContainer = this.shadowRoot?.querySelector('.options-container') as HTMLElement
+      if (optionsContainer && this.highlightedIndex >= 0) {
+        const targetScroll = this.highlightedIndex * this._itemHeight
+        const containerHeight = optionsContainer.clientHeight
+        const currentScroll = optionsContainer.scrollTop
+
+        if (targetScroll < currentScroll) {
+          optionsContainer.scrollTop = targetScroll
+        }
+ else if (targetScroll + this._itemHeight > currentScroll + containerHeight) {
+          optionsContainer.scrollTop = targetScroll + this._itemHeight - containerHeight
+        }
       }
     })
   }
@@ -343,6 +374,11 @@ function App() {
       ? (this._featureList.find(item => item.value === this.feature)?.label || this.feature)
       : '请选择一个特性...'
 
+    const { start, end } = this._getVisibleRange()
+    const visibleItems = this._filteredFeatureList.slice(start, end)
+    const totalHeight = this._filteredFeatureList.length * this._itemHeight
+    const offsetY = start * this._itemHeight
+
     return html`
       <h3>选择特性</h3>
       <p>你想展示什么特性？</p>
@@ -356,7 +392,7 @@ function App() {
           aria-expanded=${this.dropdownOpen}
           aria-haspopup="listbox"
         >
-          <span class="select-value">${displayValue}</span>
+          <span class="select-value">${unsafeHTML(displayValue)}</span>
           <span class="select-arrow ${this.dropdownOpen ? 'open' : ''}">▼</span>
         </div>
         ${this.dropdownOpen
@@ -374,22 +410,31 @@ function App() {
                 aria-label="搜索特性"
               />
             </div>
-            <div class="options-container">
+            <div class="options-container" @scroll=${this._onOptionsScroll}>
               ${this._filteredFeatureList.length === 0
                 ? html`<div class="no-results">未找到匹配的特性</div>`
-                : html`${repeat(this._filteredFeatureList, item => item.value, (item, index) => html`
-                  <div 
-                    class="option ${this.feature === item.value ? 'selected' : ''} ${index === this.highlightedIndex ? 'highlighted' : ''}"
-                    @click=${() => this._selectFeature(item.value)}
-                    @mouseenter=${() => { this.highlightedIndex = index }}
-                    role="option"
-                    aria-selected=${this.feature === item.value}
-                  >
-                    <span class="option-label">${item.label}</span>
-                    <span class="option-value">${item.value}</span>
+                : html`
+                  <div class="virtual-scroll-spacer" style="height: ${totalHeight}px;">
+                    <div class="virtual-scroll-content" style="transform: translateY(${offsetY}px);">
+                      ${repeat(visibleItems, item => item.value, (item) => {
+                        const index = this._filteredFeatureList.indexOf(item)
+                        return html`
+                          <div 
+                            class="option ${this.feature === item.value ? 'selected' : ''} ${index === this.highlightedIndex ? 'highlighted' : ''}"
+                            @click=${() => this._selectFeature(item.value)}
+                            @mouseenter=${() => { this.highlightedIndex = index }}
+                            role="option"
+                            aria-selected=${this.feature === item.value}
+                            style="height: ${this._itemHeight}px;"
+                          >
+                            <span class="option-label">${unsafeHTML(item.label)}</span>
+                            <span class="option-value">${item.value}</span>
+                          </div>
+                        `
+                      })}
+                    </div>
                   </div>
-                `)}
-              `}
+                `}
             </div>
           </div>
         `
@@ -742,6 +787,16 @@ function App() {
       white-space: nowrap;
     }
 
+    .select-value code {
+      background-color: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #d63384;
+      font-weight: normal;
+    }
+
     .select-arrow {
       transition: transform 0.2s ease;
       color: #666;
@@ -793,6 +848,19 @@ function App() {
     .options-container {
       max-height: 200px;
       overflow-y: auto;
+      position: relative;
+    }
+
+    .virtual-scroll-spacer {
+      position: relative;
+      width: 100%;
+    }
+
+    .virtual-scroll-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     .option {
@@ -803,6 +871,7 @@ function App() {
       display: flex;
       flex-direction: column;
       gap: 4px;
+      box-sizing: border-box;
     }
 
     .option:last-child {
@@ -830,6 +899,16 @@ function App() {
       font-weight: 500;
       color: #333;
       font-size: 14px;
+    }
+
+    .option-label code {
+      background-color: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #d63384;
+      font-weight: normal;
     }
 
     .option-value {
@@ -864,6 +943,11 @@ function App() {
       
       .select-value {
         color: #fff;
+      }
+
+      .select-value code {
+        background-color: #3a3a3a;
+        color: #ff79c6;
       }
 
       .select-arrow {
@@ -907,6 +991,11 @@ function App() {
 
       .option-label {
         color: #fff;
+      }
+
+      .option-label code {
+        background-color: #3a3a3a;
+        color: #ff79c6;
       }
 
       .option-value {
