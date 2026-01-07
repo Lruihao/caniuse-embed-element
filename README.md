@@ -7,6 +7,10 @@ A lightweight, customizable web component that embeds [caniuse.com](https://cani
 
 [🌟 **Live Demo**](https://lruihao.github.io/caniuse-embed-element/)
 
+![caniuse example](./preview/caniuse.webp)
+
+![baseline example](./preview/baseline.png)
+
 ## ✨ Features
 
 - 🎯 **Easy Integration**: Drop-in web component that works with any framework or vanilla HTML
