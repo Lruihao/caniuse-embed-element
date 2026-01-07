@@ -134,7 +134,7 @@ export class CaniuseEmbedApp extends LitElement {
         if (targetScroll < currentScroll) {
           optionsContainer.scrollTop = targetScroll
         }
- else if (targetScroll + this._itemHeight > currentScroll + containerHeight) {
+        else if (targetScroll + this._itemHeight > currentScroll + containerHeight) {
           optionsContainer.scrollTop = targetScroll + this._itemHeight - containerHeight
         }
       }
@@ -245,7 +245,7 @@ export class CaniuseEmbedApp extends LitElement {
   introTemplate() {
     return html`
       <demo-section>
-        <h2>🎯 主要特性</h2>
+        <h2 slot="title">🎯 主要特性</h2>
         <p>使用 <a href="https://lit.dev" target="_blank">Lit</a> 构建，由 <a href="https://github.com/Lruihao" target="_blank">@Lruihao</a> 开发。</p>
         <ul>
           <li>✅ 完整的 TypeScript 类型支持</li>
@@ -262,7 +262,7 @@ export class CaniuseEmbedApp extends LitElement {
   installTemplate() {
     return html`
       <demo-section>
-        <h2>📦 安装</h2>
+        <h2 slot="title">📦 安装</h2>
         <p>使用 npm 安装：</p>
         <div class="code-block">
           <pre><code>npm install @cell-x/caniuse-embed-element</code></pre>
@@ -281,8 +281,8 @@ export class CaniuseEmbedApp extends LitElement {
 
   frameworkIntegrationTemplate() {
     return html`
-      <demo-section>
-        <h2>🪢 框架集成</h2>
+      <demo-section collapsed=true>
+        <h2 slot="title">🪢 框架集成</h2>
         <p>🟢 Vue 3 集成</p>
         <div class="code-block">
           <pre><code>&lt;script setup&gt;
@@ -326,7 +326,7 @@ function App() {
   propsTemplate() {
     return html`
       <demo-section>
-        <h2>🛠️ 支持的属性</h2>
+        <h2 slot="title">🛠️ 支持的属性</h2>
         <table>
           <thead>
             <tr>
@@ -500,7 +500,7 @@ function App() {
   liveDemoTemplate() {
     return html`
       <demo-section>
-        <h2>🌐 实时演示</h2>
+        <h2 slot="title">🌐 实时演示</h2>
         ${this.featureSelectTemplate()}
         ${this.settingsTemplate()}
         ${this.feature ? this.embedCodeTemplate() : ''}
@@ -514,8 +514,8 @@ function App() {
 
   dynamicDemoTemplate() {
     return html`
-      <demo-section class="dynamic-demo-section">
-        <h2>⛰️ 动态创建元素</h2>
+      <demo-section class="dynamic-demo-section" collapsed=true>
+        <h2 slot="title">⛰️ 动态创建元素</h2>
         <p>和原生元素一样，在 JS 中可以使用 <code class="inline-code">document.createElement</code> 动态创建元素，点击创建查看效果：</p>
         <p>
           <input type="text" @input=${this._onFeatureInputChange} value=${this.featureInput} placeholder="输入特性名称" />
