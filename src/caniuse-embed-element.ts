@@ -2,6 +2,11 @@ import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 
 /**
+ * Used to identify messages related to the CaniuseEmbedElement.
+ */
+const CIUE_EVENT_TYPE = 'ciu-embed'
+
+/**
  * Props for configuring the CaniuseEmbed component.
  *
  * @property feature - The identifier of the feature to display support data for (e.g., 'flexbox').
@@ -147,7 +152,7 @@ export class CaniuseEmbedElement extends LitElement {
   private handleMessage = (ev: MessageEvent) => {
     const data = this.parseData(ev.data)
     const { type, payload = {} } = data
-    if (type === 'ciu_embed') {
+    if (type === CIUE_EVENT_TYPE) {
       if (payload.feature === this.feature && payload.meta === this.meta) {
         this._iframeHeight = Math.ceil(payload.height)
         this.requestUpdate()
