@@ -50,7 +50,7 @@
     "@lit-labs/rollup-plugin-minify-html-literals": "^0.1.0",
     "auto-changelog-plus": "^1.2.1",
     "eslint": "^9.37.0",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.2",
     "vite": "^8.0.3",
     "vite-plugin-dts": "^4.5.4"
   },
